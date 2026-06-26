@@ -626,11 +626,11 @@ const MangaCard = ({
       className="block cursor-pointer" 
       onClick={handleMangaClick}
     >
-      <div className="group latest-poster bg-gradient-to-br from-gray-900 to-black rounded-xl transition-all border border-gray-700 flex aspect-video overflow-hidden relative">
+      <div className="group latest-poster bg-gradient-to-br from-gray-900 to-black rounded-xl transition-all duration-300 border border-gray-700 hover:border-orange-500/60 hover:shadow-[0_8px_30px_-6px_rgba(249,115,22,0.35)] hover:-translate-y-1 flex aspect-video overflow-hidden relative">
         {/* Cover Image - Left Side */}
-        <div 
-          className="flex flex-col justify-between rounded-l-xl transition-all aspect-[0.75/1] h-full bg-no-repeat bg-cover bg-center relative"
-          style={{ 
+        <div
+          className="flex flex-col justify-between rounded-l-xl transition-transform duration-500 ease-out group-hover:scale-105 aspect-[0.75/1] h-full bg-no-repeat bg-cover bg-center relative"
+          style={{
             backgroundImage: `url(${imageUrl})`,
             boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)'
           }}
