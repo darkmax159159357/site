@@ -1,0 +1,94 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: is the signed-in user an admin?
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ---- Users: a user reads/writes only their own doc; admins read all ----
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow write: if request.auth != null && request.auth.uid == userId;
+
+      match /bookmarks/{bookmarkId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      match /reading_history/{historyId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      match /ratings/{mangaId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // ---- Admin accounts collection: NOT publicly readable (holds passwords) ----
+    // Reads/writes happen via the Admin SDK (server) which bypasses these rules.
+    match /user_management/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ---- Redemption codes: not publicly listable; created server-side (Admin SDK) ----
+    match /redemption_codes/{codeId} {
+      // A signed-in user may read a code (to validate it) but not list all.
+      allow get: if request.auth != null;
+      // Users can only flip a code to redeemed (and only if not already used).
+      allow update: if request.auth != null &&
+                    request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRedeemed', 'redeemedBy', 'redeemedAt']) &&
+                    !resource.data.isRedeemed &&
+                    request.resource.data.redeemedBy == request.auth.uid;
+      // Creation is done by the Admin SDK (server) — denied to clients here.
+      allow create, delete: if isAdmin();
+    }
+
+    // ---- Public catalog-ish collections: world-readable, constrained writes ----
+
+    // View counters: anyone can increment, but only the count/timestamp fields.
+    match /manga_views/{viewId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+    match /chapter_views/{viewId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // Global bookmark counts
+    match /bookmarks/{mangaId} {
+      allow read: if true;
+      allow create, update: if request.auth != null;
+    }
+
+    // Manga ratings
+    match /manga_ratings/{mangaId} {
+      allow read: if true;
+      allow create, update: if request.auth != null;
+      allow delete: if isAdmin();
+    }
+
+    // Locked chapters
+    match /locked_chapters/{chapterId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Posts / ads / maintenance / security / site config: public read, admin write
+    match /posts/{postId}           { allow read: if true; allow write: if isAdmin(); }
+    match /ad_config/{configId}     { allow read: if true; allow write: if isAdmin(); }
+    match /ads_config/{configId}    { allow read: if true; allow write: if isAdmin(); }
+    match /maintenance/{docId}      { allow read: if true; allow write: if isAdmin(); }
+    match /security_settings/{docId}{ allow read: if true; allow write: if isAdmin(); }
+    match /site_config/{docId}      { allow read: if true; allow write: if isAdmin(); }
+
+    // Default: deny everything not explicitly matched above.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,127 @@
+/* Fluid animations and styles - Performance optimized */
+.fluid-card {
+  border-radius: 18px;
+  background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.3));
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+}
+
+.fluid-card:hover {
+  box-shadow: 0 12px 25px -5px rgba(249, 115, 22, 0.15);
+  transform: translateY(-3px);
+}
+
+.fluid-pill {
+  border-radius: 9999px;
+  background: rgba(30, 41, 59, 0.4);
+  padding: 4px 12px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fluid-pill:hover {
+  background: rgba(249, 115, 22, 0.15);
+  color: white;
+}
+
+.fluid-badge {
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.3);
+}
+
+.fluid-glass {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 18px;
+  transition: background 0.2s ease;
+}
+
+.fluid-glass:hover {
+  background: rgba(30, 41, 59, 0.4);
+}
+
+.fluid-button {
+  border-radius: 9999px;
+  background: linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68));
+  box-shadow: 0 5px 10px -3px rgba(249, 115, 22, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.fluid-button:hover {
+  box-shadow: 0 8px 15px -4px rgba(249, 115, 22, 0.3);
+  transform: scale(1.03);
+}
+
+.fluid-button:active {
+  transform: scale(0.98);
+}
+
+.fluid-spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(249, 115, 22, 0.3);
+  border-top-color: rgb(249, 115, 22);
+  animation: spin 0.8s infinite linear;
+  will-change: transform;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fluid-glow {
+  position: relative;
+}
+
+.fluid-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(45deg, rgba(249, 115, 22, 0.5), rgba(239, 68, 68, 0.5));
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fluid-glow:hover::after {
+  opacity: 0.5;
+}
+
+.fluid-tabs {
+  display: flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 16px;
+}
+
+.fluid-tab {
+  border-radius: 12px;
+  padding: 6px 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fluid-tab.active {
+  background: linear-gradient(to right, rgb(249, 115, 22), rgb(234, 88, 12));
+  color: white;
+}
+
+.fluid-tab:not(.active) {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.fluid-tab:not(.active):hover {
+  background: rgba(0, 0, 0, 0.3);
+} 

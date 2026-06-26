@@ -1,0 +1,52 @@
+/* Ripple animation for Add to Library button */
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.5);
+    transform: scale(1);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+    transform: scale(0.95);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+    transform: scale(1);
+  }
+}
+
+.ripple {
+  animation: ripple 0.7s ease-out;
+}
+
+/* Bookmark pulse animation */
+@keyframes bookmark-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bookmark-added {
+  animation: bookmark-pulse 0.5s ease-in-out;
+}
+
+/* Flame icon dot animation */
+@keyframes dot-animation {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.7));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.9));
+    transform: scale(1.1);
+  }
+}
+
+.dot-animation {
+  animation: dot-animation 2s ease-in-out infinite;
+} 

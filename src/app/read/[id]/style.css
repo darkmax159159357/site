@@ -1,0 +1,148 @@
+#disqus_thread a {
+    color: #fff;
+}
+
+/* Custom cursor styling */
+.reader-cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease;
+}
+
+.reader-cursor-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+.reader-cursor-icon {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+/* Reader area */
+.reader-area {
+    transition: max-width 0.3s ease;
+}
+
+/* Mini dropdown menu */
+.mini-dropdown {
+    background-color: rgba(37, 38, 43, 0.85);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: opacity 0.3s ease;
+    font-size: 12px;
+}
+
+/* Options menu animation */
+.options-menu {
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Smooth image loading animation - optimized for performance */
+@keyframes fadeInImage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.read img {
+    animation: fadeInImage 0.1s ease-out;
+    will-change: opacity;
+}
+
+/* Bottom navigation bar */
+.bottom-nav {
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+    height: 50px;
+}
+
+/* Zoom transition */
+.zoom-transition {
+    transition: transform 0.3s ease;
+}
+
+/* Chapters button */
+.chapters-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #2C2E33;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.chapters-button:hover {
+    background-color: #3E4046;
+}
+
+/* Progress indicator */
+.progress-indicator {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+/* Remove gaps between manga pages and optimize for rendering */
+.read {
+    grid-gap: 0;
+    row-gap: 0;
+    column-gap: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    contain: content;
+    overflow: hidden;
+}
+
+/* Container for each manga page */
+.manga-page-container {
+    margin: 0;
+    padding: 0;
+    contain: content;
+    min-height: 200px;
+    will-change: transform;
+    display: block;
+    height: auto;
+    overflow: hidden;
+}
+
+/* Prevent content reflow during load */
+.read img {
+    display: block;
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    object-fit: contain;
+    contain: content;
+}
+
+/* Optimize animation for placeholders */
+@keyframes pulseBackground {
+    0% { background-color: rgba(31, 41, 55, 0.5); }
+    50% { background-color: rgba(31, 41, 55, 0.8); }
+    100% { background-color: rgba(31, 41, 55, 0.5); }
+}
+
+.animate-pulse {
+    animation: pulseBackground 1.5s ease-in-out infinite;
+    will-change: background-color;
+}

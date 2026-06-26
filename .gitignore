@@ -1,0 +1,76 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+.env.production
+.env.development
+# vercel
+.vercel
+
+# secrets — never commit
+serviceAccountKey.json
+ssh.txt
+*.key
+firebase-rules.txt
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.idea/
+.vscode/
+
+# Specifically exclude large files
+src/app/admin/node_modules/@next/swc-win32-x64-msvc/next-swc.win32-x64-msvc.node
+
+# Large files
+*.zip
+*.rar
+*.7z
+*.gz
+*.tar
+
+# Large media files
+*.mp4
+*.mov
+*.webm
+
+# Project specific
+medusascans.zip
+src.zip
+/Medusa/manga/*/*.jpg
+/Medusa/manga/*/*.png
+/Medusa/manga/*/*.webp
+
+# dev-only screenshots / artifacts (not needed for deploy)
+ss.png
+tsconfig.tsbuildinfo
+performance-comparison.html

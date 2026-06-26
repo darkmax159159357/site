@@ -1,0 +1,168 @@
+/* Neon Theme Styles */
+
+/* Container styles */
+.neon-container {
+  background-color: #0a0a0c;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 95, 20, 0.3);
+  border: 1px solid rgba(255, 95, 20, 0.3);
+}
+
+/* Header styles */
+.neon-header {
+  background: linear-gradient(90deg, #161618, #1c1c1e);
+  border-left: 2px solid #f97316;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 10px rgba(255, 95, 20, 0.3);
+}
+
+/* Title with glow effect */
+.neon-title {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 95, 20, 0.7);
+}
+
+.neon-title span {
+  background: linear-gradient(to right, #facc15, #f97316);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Neon divider */
+.neon-divider {
+  height: 1px;
+  background: linear-gradient(to right, #f97316, transparent);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(255, 95, 20, 0.3);
+}
+
+/* Neon button styles */
+.neon-button-primary {
+  background: linear-gradient(to right, #f97316, #ef4444);
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: white;
+  padding: 0.875rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 0 15px rgba(255, 95, 20, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.neon-button-primary:hover {
+  box-shadow: 0 0 20px rgba(255, 95, 20, 0.7);
+}
+
+.neon-button-secondary {
+  background-color: #161618;
+  border: 1px solid #f97316;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: white;
+  padding: 0.875rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 0 15px rgba(255, 95, 20, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.neon-button-secondary:hover {
+  box-shadow: 0 0 20px rgba(255, 95, 20, 0.5);
+  background-color: #1c1c1e;
+}
+
+/* Card styles */
+.neon-card {
+  background: linear-gradient(to bottom right, #161618, #0e0e10);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid #27272a;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-card:hover {
+  border-color: rgba(255, 95, 20, 0.3);
+  box-shadow: 0 0 15px rgba(255, 95, 20, 0.3);
+}
+
+/* Badge styles */
+.neon-badge {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(82, 82, 91, 0.5);
+}
+
+.neon-badge-primary {
+  background: linear-gradient(to right, #f97316, #ef4444);
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  font-weight: 700;
+  font-size: 0.6875rem;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  color: white;
+}
+
+/* Rating badge */
+.neon-rating {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(to bottom right, #facc15, #f97316);
+  border-radius: 9999px;
+  box-shadow: 0 0 15px rgba(255, 95, 20, 0.5);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neon-rating-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-color: #161618;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neon-rating-text {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(to right, #facc15, #f97316);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Genre pills */
+.neon-pill {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  background: linear-gradient(to right, rgba(249, 115, 22, 0.2), rgba(239, 68, 68, 0.1));
+  color: white;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  box-shadow: 0 0 10px rgba(255, 95, 20, 0.2);
+} 
