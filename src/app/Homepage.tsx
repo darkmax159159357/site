@@ -10,6 +10,7 @@ import TrendingSection from "@/components/TrendingSection";
 import ResponsiveLayout from "@/components/ResponsiveLayout";
 import Trending2 from "@/components/Trending2";
 import CompletedCollection from "@/components/CompletedCollection";
+import PinnedCollection from "@/components/PinnedCollection";
 import BlogPosts from "@/components/BlogPosts";
 import BlogPosts2 from "@/components/BlogPosts2";
 import { FaDiscord, FaShareAlt } from "react-icons/fa";
@@ -167,6 +168,11 @@ const Homepage = () => {
         )}
       </section>
     ) : null,
+    pinned: (
+      <section id="pinned-collection" className="mt-8 sm:mt-12">
+        <PinnedCollection />
+      </section>
+    ),
     popular: (
       <section id="trending" className="mt-8 sm:mt-12">
         <TrendingSection />

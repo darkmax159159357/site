@@ -6,6 +6,7 @@ export type SectionId =
   | "hero"
   | "premium"      // BlogPosts "Unlock Premium"
   | "socials"
+  | "pinned"       // Pinned Collection (Editor's Picks, top-rated polaroids)
   | "popular"      // TrendingSection "Most Popular"
   | "latest"       // LatestComics "Latest Updates"
   | "completed"    // Completed Collection
@@ -26,9 +27,9 @@ export type SiteConfig = {
   sectionOrder: SectionId[];
 };
 
-// Default order mirrors mythtoons: hero, premium, socials, latest, completed, popular, toprated.
+// Default order mirrors mythtoons: hero, premium, socials, pinned, latest, completed, popular, toprated.
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
-  "hero", "premium", "socials", "latest", "completed", "popular", "toprated",
+  "hero", "premium", "socials", "pinned", "latest", "completed", "popular", "toprated",
 ];
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
