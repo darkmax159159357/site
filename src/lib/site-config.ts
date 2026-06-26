@@ -1,6 +1,16 @@
 import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
+// Homepage section identifiers (the panels that can be reordered/toggled).
+export type SectionId =
+  | "hero"
+  | "premium"      // BlogPosts "Unlock Premium"
+  | "socials"
+  | "popular"      // TrendingSection "Most Popular"
+  | "latest"       // LatestComics "Latest Updates"
+  | "completed"    // Completed Collection
+  | "toprated";    // Trending2 "Top Rated"
+
 export type SiteConfig = {
   social: {
     discord: string;
@@ -12,7 +22,14 @@ export type SiteConfig = {
     heroImage: string;
     redeemImage: string;
   };
+  // Order of homepage panels (top -> bottom). Dashboard-controlled.
+  sectionOrder: SectionId[];
 };
+
+// Default order mirrors mythtoons: hero, premium, socials, latest, completed, popular, toprated.
+export const DEFAULT_SECTION_ORDER: SectionId[] = [
+  "hero", "premium", "socials", "latest", "completed", "popular", "toprated",
+];
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
   social: {
@@ -23,6 +40,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     heroImage: "/Assets/medusa_stand.svg",
     redeemImage: "/Assets/medusa2.svg",
   },
+  sectionOrder: DEFAULT_SECTION_ORDER,
 };
 
 export async function getSiteConfig(): Promise<SiteConfig> {
@@ -57,6 +75,14 @@ export async function getSiteConfig(): Promise<SiteConfig> {
           heroImage: data.images?.heroImage || data.heroImage || DEFAULT_SITE_CONFIG.images.heroImage,
           redeemImage: data.images?.redeemImage || data.redeemImage || DEFAULT_SITE_CONFIG.images.redeemImage,
         },
+        // Validate stored order: keep only known ids, then append any missing ones
+        // so a new section never disappears just because the saved order is old.
+        sectionOrder: (() => {
+          const stored: string[] = Array.isArray(data.sectionOrder) ? data.sectionOrder : [];
+          const valid = stored.filter((s): s is SectionId => DEFAULT_SECTION_ORDER.includes(s as SectionId));
+          const missing = DEFAULT_SECTION_ORDER.filter((s) => !valid.includes(s));
+          return valid.length ? [...valid, ...missing] : DEFAULT_SECTION_ORDER;
+        })(),
       };
     }
 
