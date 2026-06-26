@@ -34,7 +34,7 @@ const disqusConfig = {
    * In development, we still use the production domain for the URL
    * to ensure comments are consistent between environments
    */
-  domain: process.env.NEXT_PUBLIC_DOMAIN || 'https://medusascans-relc.vercel.app',
+  domain: process.env.NEXT_PUBLIC_DOMAIN || 'https://glintscans.com',
   
   /**
    * Default language for Disqus

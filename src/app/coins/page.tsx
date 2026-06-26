@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { FaCoins, FaGift, FaArrowRight, FaBolt, FaCrown, FaStar } from 'react-icons/fa';
 import { useAuth } from '@/contexts/AuthContext';
-import Navbar from '@/components/Navbar';
 
 const packages = [
   { coins: 100, price: '$5', icon: FaStar, accent: 'from-amber-400 to-orange-500', tag: '' },
@@ -19,9 +18,7 @@ export default function CoinsPage() {
   const balance = userData?.coins ?? 0;
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-[#0f0f14] via-[#14121f] to-[#0f0f14] px-4 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f0f14] via-[#14121f] to-[#0f0f14] px-4 py-16">
         <div className="mx-auto max-w-5xl">
           {/* Header */}
           <motion.div
@@ -104,7 +101,6 @@ export default function CoinsPage() {
             </button>
           </motion.div>
         </div>
-      </div>
-    </>
+    </div>
   );
 }

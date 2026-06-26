@@ -323,9 +323,7 @@ const RedeemPage: React.FC = () => {
             <h2 className="text-2xl font-bold text-fuchsia-100 mb-4" style={{ textShadow: '0 0 10px rgba(192, 132, 252, 0.3)' }}>Need a redemption code?</h2>
             <p className="text-fuchsia-200/80 mb-6 max-w-xl mx-auto">Visit our official store to purchase codes and support our work! Enjoy premium content and features with your coins.</p>
             <motion.a
-              href="https://google.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/coins"
               className="group inline-flex items-center gap-2 py-3 px-8 bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-medium rounded-full shadow-lg transition-colors duration-300"
               whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(192, 132, 252, 0.4)" }}
               whileTap={{ scale: 0.98 }}
