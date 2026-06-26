@@ -28,8 +28,19 @@ if (!admin.apps.length) {
 }
 
 export default admin;
-export const adminAuth = admin.auth();
-export const adminFirestore = admin.firestore();
+
+// Lazy getters so importing this module never calls admin.auth()/firestore()
+// at module-load time. That call throws during the Vercel build when no
+// credentials are present. Call these inside request handlers instead.
+export const getAdminAuth = () => admin.auth();
+export const getAdminFirestore = () => admin.firestore();
+// Back-compat proxies: accessing a property triggers init only at call time.
+export const adminAuth = new Proxy({} as admin.auth.Auth, {
+  get: (_t, prop) => (admin.auth() as any)[prop],
+});
+export const adminFirestore = new Proxy({} as admin.firestore.Firestore, {
+  get: (_t, prop) => (admin.firestore() as any)[prop],
+});
 
 // Function to create a reading history entry server-side
 export const createReadingHistoryServerSide = async (

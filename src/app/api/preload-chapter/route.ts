@@ -4,6 +4,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { adminFirestore } from '@/lib/firebase-admin';
 
+// Needs Firebase Admin at runtime; don't pre-render at build time.
+export const dynamic = 'force-dynamic';
+
 // Helper function to check if chapter is locked
 async function isChapterLocked(chapterId: string, userId?: string): Promise<boolean> {
   try {

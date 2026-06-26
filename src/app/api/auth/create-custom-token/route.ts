@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import admin from '@/lib/firebase-admin';
 
+// Don't evaluate this route at build time — it needs Firebase Admin credentials
+// that only exist at runtime (Vercel env vars).
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const { discordId, email, username } = await request.json();

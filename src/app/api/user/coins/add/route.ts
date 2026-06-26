@@ -1,15 +1,10 @@
-import { auth, db } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { NextRequest, NextResponse } from 'next/server';
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
-import { getAuth } from 'firebase-admin/auth';
-import { getFirebaseAdmin } from '@/lib/firebase-admin';
+import admin from '@/lib/firebase-admin';
 
-// Initialize Firebase Admin if not already initialized
-try {
-  getFirebaseAdmin();
-} catch (error) {
-  console.error("Firebase admin initialization failed:", error);
-}
+// Needs Firebase Admin at runtime; don't pre-render at build time.
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
     
     // Verify token with Firebase Admin
-    const decodedToken = await getAuth().verifyIdToken(token);
+    const decodedToken = await admin.auth().verifyIdToken(token);
     if (!decodedToken) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
