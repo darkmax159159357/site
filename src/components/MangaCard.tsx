@@ -67,6 +67,39 @@ const getCountryName = (code: string) => {
   }
 };
 
+// Robustly parse a chapter date string into a timestamp (ms).
+// Supports both the legacy "DD-MM-YYYY HH:MM am/pm" format and ISO 8601
+// (e.g. "2025-06-09T10:00:00Z"), plus any other format the native Date
+// constructor understands. Returns 0 when the value can't be parsed.
+const parseChapterTimestamp = (dateString?: string): number => {
+  if (!dateString || typeof dateString !== 'string') return 0;
+
+  // Legacy format: "09-06-2025 10:00 pm" (day-month-year, space-separated).
+  // Only treat it as legacy when it has a space AND no ISO "T" marker.
+  if (dateString.includes(' ') && !dateString.includes('T')) {
+    const dateParts = dateString.split(' ');
+    const dateComponents = dateParts[0].split('-');
+    if (dateComponents.length === 3) {
+      const day = parseInt(dateComponents[0]);
+      const month = parseInt(dateComponents[1]) - 1; // Months are 0-indexed
+      const year = parseInt(dateComponents[2]);
+      const timeParts = (dateParts[1] || '').split(':');
+      let hour = parseInt(timeParts[0]) || 0;
+      const minute = parseInt(timeParts[1]) || 0;
+      if (dateParts[2]?.toLowerCase() === 'pm' && hour < 12) hour += 12;
+      if (dateParts[2]?.toLowerCase() === 'am' && hour === 12) hour = 0;
+      const legacy = new Date(year, month, day, hour, minute);
+      if (!isNaN(legacy.getTime())) return legacy.getTime();
+    }
+  }
+
+  // ISO 8601 or any other Date-parsable string.
+  const parsed = new Date(dateString);
+  if (!isNaN(parsed.getTime())) return parsed.getTime();
+
+  return 0;
+};
+
 // Function to get relative time
 const getRelativeTime = (chapter: any) => {
   try {
@@ -74,52 +107,22 @@ const getRelativeTime = (chapter: any) => {
       return 'Recently added';
     }
 
-    // Get the added_chap_date field
-    const dateString = chapter.added_chap_date;
-    if (!dateString) {
-        return 'Recently added';
-      }
-      
-    // Parse the date - format is "09-06-2025 10:00 pm"
-    // Let's handle this format specifically
-    const dateParts = dateString.split(' ');
-    if (dateParts.length < 2) {
-      return dateString; // Return the raw string if we can't parse it
+    // Prefer the pre-formatted relative string when LatestComics already
+    // computed it (e.g. "3 hours ago"). This keeps the card consistent with
+    // the list-level formatting and avoids re-parsing.
+    if (chapter.formattedDate && chapter.formattedDate !== 'Recently added') {
+      return chapter.formattedDate;
     }
 
-    // Parse date part: "09-06-2025"
-    const dateComponents = dateParts[0].split('-');
-    if (dateComponents.length !== 3) {
-      return dateString;
+    // Fall back to parsing whichever raw date field is available.
+    const dateString =
+      chapter.added_chap_date || chapter.added_date || chapter.release_date || chapter.date;
+    const timestamp = parseChapterTimestamp(dateString);
+    if (!timestamp) {
+      return 'Recently added';
     }
 
-    const day = parseInt(dateComponents[0]);
-    const month = parseInt(dateComponents[1]) - 1; // Months are 0-indexed
-    const year = parseInt(dateComponents[2]);
-
-    // Parse time part: "10:00"
-    const timeParts = dateParts[1].split(':');
-    if (timeParts.length !== 2) {
-      return dateString;
-    }
-    
-    let hour = parseInt(timeParts[0]);
-    const minute = parseInt(timeParts[1]);
-    
-    // Adjust for PM
-    const isPM = dateParts[2]?.toLowerCase() === 'pm';
-    if (isPM && hour < 12) {
-      hour += 12;
-    }
-    
-    // Create date object
-    const date = new Date(year, month, day, hour, minute);
-    
-    // Check if date is valid
-    if (isNaN(date.getTime())) {
-      return dateString;
-    }
-      
+    const date = new Date(timestamp);
     const now = new Date();
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
     
@@ -193,57 +196,16 @@ const isNewChapter = (chapter: any) => {
       return false;
     }
 
-    // Get the added_chap_date field - this is our primary date field
-    const dateString = chapter.added_chap_date;
-    if (!dateString) {
+    const dateString =
+      chapter.added_chap_date || chapter.added_date || chapter.release_date || chapter.date;
+    const timestamp = parseChapterTimestamp(dateString);
+    if (!timestamp) {
       return false;
     }
 
-    // Parse the date - format is "09-06-2025 10:00 pm"
-    // Let's handle this format specifically
-    const dateParts = dateString.split(' ');
-    if (dateParts.length < 2) {
-      return false;
-    }
-
-    // Parse date part: "09-06-2025"
-    const dateComponents = dateParts[0].split('-');
-    if (dateComponents.length !== 3) {
-      return false;
-    }
-    
-    const day = parseInt(dateComponents[0]);
-    const month = parseInt(dateComponents[1]) - 1; // Months are 0-indexed
-    const year = parseInt(dateComponents[2]);
-
-    // Parse time part: "10:00"
-    const timeParts = dateParts[1].split(':');
-    if (timeParts.length !== 2) {
-      return false;
-    }
-    
-    let hour = parseInt(timeParts[0]);
-    const minute = parseInt(timeParts[1]);
-    
-    // Adjust for PM
-    const isPM = dateParts[2]?.toLowerCase() === 'pm';
-    if (isPM && hour < 12) {
-      hour += 12;
-    }
-    
-    // Create date object
-    const date = new Date(year, month, day, hour, minute);
-    
-    // Check if date is valid
-    if (isNaN(date.getTime())) {
-      return false;
-    }
-    
-    // Check if it's less than 24 hours old
-    const now = new Date();
-    const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
-    
-    return diffInHours < 24;
+    // Check if it's less than 24 hours old (and not a future date).
+    const diffInHours = (Date.now() - timestamp) / (1000 * 60 * 60);
+    return diffInHours >= 0 && diffInHours < 24;
   } catch (error) {
     return false; // Any error means it's not new
   }
@@ -707,15 +669,15 @@ const MangaCard = ({
                           Chapter {chapter.number}
                         </div>
                         <div className="flex gap-1 justify-start items-center w-fit relative z-40">
-                          <ChapterLockIcon 
-                            chapter={chapter} 
-                            mangaId={id} 
+                          <ChapterLockIcon
+                            chapter={chapter}
+                            mangaId={id}
                             onPurchaseStatusChange={(isPurchased) => {
                               if (isPurchased) {
                                 // Force a re-render by creating a new chapter object
                                 const updatedChapter = {...chapter, isPurchased: true};
                                 Object.assign(chapter, updatedChapter);
-                                
+
                                 // Update purchase status in component state
                                 setPurchasedStatus(prev => ({
                                   ...prev,
@@ -724,6 +686,15 @@ const MangaCard = ({
                               }
                             }}
                           />
+                          {/* Coin price pill — only shown for paid chapters (coinAmount > 1)
+                              and when the user hasn't already purchased the chapter. */}
+                          {Number(chapter.coinAmount) > 1 &&
+                            !(chapter.isPurchased || purchasedStatus[`${id}-ch${chapter.number}`]) && (
+                            <span className="inline-flex items-center gap-0.5 bg-amber-500/15 text-amber-400 border border-amber-500/30 rounded-full text-[9px] leading-none px-1.5 py-0.5 font-medium">
+                              <LockClosedIcon className="h-2.5 w-2.5" />
+                              {chapter.coinAmount}c
+                            </span>
+                          )}
                           {isNewChapter(chapter) && (
                             <>
                               <svg 
