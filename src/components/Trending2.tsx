@@ -277,9 +277,15 @@ const Trending2 = () => {
                 console.error(`Error loading manga.json for ${mangaSlug}:`, error);
               }
               
-              // Ensure we have description with fallbacks
-              const description = mangaDetails.description || data.description || "No description available";
-              
+              // Prefer Firestore-stored values (reliable on Vercel); fall back to manga.json.
+              const description = data.description || mangaDetails.description || "No description available";
+              const genres = (Array.isArray(data.genres) && data.genres.length)
+                ? data.genres
+                : (mangaDetails.genres || ["Action", "Fantasy"]);
+              const chaptersCount = data.chaptersCount?.toString()
+                || mangaDetails.chapters?.length?.toString()
+                || "?";
+
               return {
                 id: docRef.id,
                 slug: mangaSlug,
@@ -289,8 +295,8 @@ const Trending2 = () => {
                 views: data.viewCount || 0,
                 rating: rating,
                 totalRatings: data.totalRatings || 0,
-                genres: mangaDetails.genres || data.genres || ["Romance", "Fantasy"],
-                chaptersCount: mangaDetails.chapters?.length?.toString() || "?",
+                genres: genres,
+                chaptersCount: chaptersCount,
                 chapters: mangaDetails.chapters || [],
                 isMock: false,
                 lastUpdated: data.lastUpdated
