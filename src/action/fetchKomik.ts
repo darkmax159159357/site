@@ -2,6 +2,9 @@
 
 import fs from 'fs';
 import path from 'path';
+// Bundled fallback: importing the JSON guarantees the catalog ships with the
+// serverless build on Vercel, where reading public/ via fs at runtime is unreliable.
+import bundledManga from '../../public/Medusa/manga/manga.json';
 
 // Define multiple possible paths to check
 const PUBLIC_MEDUSA_PATH = path.resolve(process.cwd(), 'public', 'Medusa');
@@ -104,15 +107,16 @@ const ensureMediaPath = (mediaPath: string): string => {
 // Export the function so it can be used in other files
 export async function fetchMangaData(): Promise<any[]> {
   try {
-    // Check if manga.json exists
-    if (!fs.existsSync(MANGA_JSON_PATH)) {
-      console.error("Manga data file not found:", MANGA_JSON_PATH);
-      
-      return [];
+    // Prefer reading from disk (lets the admin update the catalog live).
+    // Fall back to the bundled import when the file isn't on disk at runtime
+    // (e.g. Vercel serverless functions), so the catalog always loads.
+    let data: any;
+    if (fs.existsSync(MANGA_JSON_PATH)) {
+      data = JSON.parse(fs.readFileSync(MANGA_JSON_PATH, 'utf8'));
+    } else {
+      console.warn("manga.json not on disk; using bundled catalog");
+      data = bundledManga as any[];
     }
-
-    // Read the manga.json file directly from the file system
-    const data = JSON.parse(fs.readFileSync(MANGA_JSON_PATH, 'utf8'));
     
     // Debug - log the first chapter of each manga to check for lock info
     if (Array.isArray(data) && data.length > 0) {
