@@ -621,12 +621,32 @@ const MangaCard = ({
     }
   };
 
+  // Per-card accent hue derived from the id (mythtoons-style colorful cards).
+  const cardHue = (() => {
+    let h = 0;
+    const s = String(id || title || "");
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360;
+    return h;
+  })();
+  const accent = `hsl(${cardHue} 60% 58%)`;
+
   return (
-    <div 
-      className="block cursor-pointer" 
+    <div
+      className="block cursor-pointer"
       onClick={handleMangaClick}
     >
-      <div className="group latest-poster bg-gradient-to-br from-gray-900 to-black rounded-xl transition-all duration-300 border border-gray-700 hover:border-orange-500/60 hover:shadow-[0_8px_30px_-6px_rgba(249,115,22,0.35)] hover:-translate-y-1 flex aspect-video overflow-hidden relative">
+      <div
+        className="group latest-poster bg-gradient-to-br from-gray-900 to-black rounded-xl transition-all duration-300 border flex aspect-video overflow-hidden relative hover:-translate-y-1"
+        style={{
+          borderColor: `color-mix(in oklab, ${accent} 30%, transparent)`,
+          boxShadow: `color-mix(in oklab, ${accent} 10%, transparent) 0px 2px 12px`,
+        }}
+      >
+        {/* Colored glow ring on hover (per-card hue) */}
+        <div
+          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"
+          style={{ boxShadow: `color-mix(in oklab, ${accent} 45%, transparent) 0px 0px 0px 1px inset, color-mix(in oklab, ${accent} 22%, transparent) 0px 6px 22px` }}
+        ></div>
         {/* Cover Image - Left Side */}
         <div
           className="flex flex-col justify-between rounded-l-xl transition-transform duration-500 ease-out group-hover:scale-105 aspect-[0.75/1] h-full bg-no-repeat bg-cover bg-center relative"
