@@ -1,6 +1,7 @@
-/* Series carousel (top hero) — exact mythtoons.org behaviour.
-   Kept in a real stylesheet (not styled-jsx) so the !important rules and the
-   center-focus opacity transitions reliably apply in production. */
+/* Series carousel (top hero) — mythtoons.org behaviour.
+   Kept in a real stylesheet (not styled-jsx) so the rules reliably apply in
+   production. We let Splide size each slide by perPage (≈20% of the row) so the
+   cards fill the width evenly; we only style the inner poster + center focus. */
 
 /* Never show a scrollbar under the carousel track. */
 .series-splide,
@@ -13,27 +14,26 @@
 .series-splide::-webkit-scrollbar,
 .series-splide .splide__track::-webkit-scrollbar,
 .series-splide .splide__list::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
   width: 0;
   height: 0;
 }
 
 .series-splide .splide__slide {
-  width: 20rem !important;
-  margin-right: 16px !important;
   transition: all 0.5s ease;
 }
 
+/* The poster fills its slide; a min-height keeps short cards consistent. */
 .series-splide .latest-poster {
-  width: 20rem;
+  width: 100%;
   min-height: 24rem;
 }
 
-/* Dim every slide that isn't the centered trio (active/prev/next/clones). */
+/* Center-focus: dim every slide that isn't the centered trio. */
 .series-splide
   .splide__slide:not(.is-active):not(.is-prev):not(.is-next):not([tabindex="-1"])
   .latest-poster {
-  opacity: 0.2 !important;
+  opacity: 0.25 !important;
 }
 
 .series-splide .splide__slide.is-active .latest-poster,
@@ -48,19 +48,15 @@
   transform: scale(1.03);
 }
 
-@media (max-width: 1200px) {
-  .series-splide .splide__slide { width: 18rem !important; }
-  .series-splide .latest-poster { width: 18rem; }
-}
-
 @media (max-width: 768px) {
-  .series-splide .splide__slide { width: 16rem !important; }
-  .series-splide .latest-poster { width: 16rem; }
+  .series-splide .latest-poster {
+    min-height: 20rem;
+  }
   /* On mobile only the centered card is bright. */
   .series-splide .splide__slide.is-prev .latest-poster,
   .series-splide .splide__slide.is-next .latest-poster,
   .series-splide .splide__slide[tabindex="-1"] .latest-poster {
-    opacity: 0.2 !important;
+    opacity: 0.25 !important;
   }
   .series-splide .splide__slide.is-active .latest-poster {
     opacity: 1 !important;
@@ -68,6 +64,7 @@
 }
 
 @media (max-width: 480px) {
-  .series-splide .splide__slide { width: 14rem !important; }
-  .series-splide .latest-poster { width: 14rem; min-height: auto !important; }
+  .series-splide .latest-poster {
+    min-height: auto;
+  }
 }
