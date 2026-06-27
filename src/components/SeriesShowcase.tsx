@@ -127,12 +127,17 @@ export default function SeriesShowcase() {
                   style={{ backgroundImage: `url(${s.cover})` }}
                 />
                 <Link href={`/manga/${s.id}`} className="relative overflow-hidden" title={s.title}>
-                  {/* Cover faded into the card via mask gradient */}
-                  <div className="relative overflow-hidden aspect-[0.80/1] w-full rounded-xl">
+                  {/* Cover faded into the card via mask gradient.
+                      NOTE: aspect ratio + background position are set inline because
+                      Tailwind's JIT drops arbitrary values like aspect-[0.80/1] and
+                      bg-[position:0%_23%] from the production build (purge), which left
+                      the cards collapsed. Inline styles always apply. */}
+                  <div className="relative overflow-hidden w-full rounded-xl" style={{ aspectRatio: "0.8 / 1" }}>
                     <div
-                      className="bg-white/5 bg-no-repeat bg-cover bg-[position:0%_23%] w-full h-full absolute top-0 left-0 transition-all"
+                      className="bg-white/5 bg-no-repeat bg-cover w-full h-full absolute top-0 left-0 transition-all"
                       style={{
                         backgroundImage: `url(${s.cover})`,
+                        backgroundPosition: "0% 23%",
                         WebkitMaskImage: "linear-gradient(rgba(0,0,0,0.9), transparent)",
                         maskImage: "linear-gradient(rgba(0,0,0,0.9), transparent)",
                       }}
@@ -219,7 +224,6 @@ export default function SeriesShowcase() {
         @media (max-width: 480px) {
           .series-splide .splide__slide { width: 14rem !important; }
           .series-splide .latest-poster { width: 14rem; min-height: auto !important; }
-          .series-splide .latest-poster .aspect-\\[0\\.80\\/1\\] { aspect-ratio: 0.8 / 1.1 !important; }
         }
       `}</style>
     </div>

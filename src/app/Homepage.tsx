@@ -94,6 +94,9 @@ const Homepage = () => {
   // Each homepage panel keyed by its SectionId, so we can render them in the
   // dashboard-configured order (siteConfig.sectionOrder).
   const sectionMap: Record<string, React.ReactNode> = {
+    // mythtoons uses the series carousel AS the hero (#hero-slider), so "series"
+    // is the top spotlight. "hero" keeps the classic banner slider available for
+    // anyone who reorders it back in from the dashboard.
     series: (
       <section id="series-showcase" className="mt-6 sm:mt-8">
         <SeriesShowcase />
@@ -212,10 +215,13 @@ const Homepage = () => {
       <div className="homepage-accent"></div>
 
       <ResponsiveLayout>
-        {/* Render homepage panels in the dashboard-configured order */}
-        {siteConfig.sectionOrder.map((sid) => (
-          <React.Fragment key={sid}>{sectionMap[sid] ?? null}</React.Fragment>
-        ))}
+        {/* Render homepage panels in the dashboard-configured order, skipping
+            any section toggled off from the dashboard. */}
+        {siteConfig.sectionOrder
+          .filter((sid) => !(siteConfig.hiddenSections || []).includes(sid))
+          .map((sid) => (
+            <React.Fragment key={sid}>{sectionMap[sid] ?? null}</React.Fragment>
+          ))}
       </ResponsiveLayout>
     </>
   );

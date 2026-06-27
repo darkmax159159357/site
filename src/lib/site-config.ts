@@ -26,12 +26,18 @@ export type SiteConfig = {
   };
   // Order of homepage panels (top -> bottom). Dashboard-controlled.
   sectionOrder: SectionId[];
+  // Sections toggled OFF from the dashboard (hidden from the homepage).
+  hiddenSections: SectionId[];
 };
 
 // Default order mirrors mythtoons: series carousel up top, then hero, premium, socials, etc.
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
   "series", "hero", "premium", "socials", "pinned", "latest", "completed", "popular", "toprated",
 ];
+
+// By default the classic banner hero is hidden, because the series carousel now
+// fills that top spot (matching mythtoons). Re-enable it from the dashboard.
+export const DEFAULT_HIDDEN_SECTIONS: SectionId[] = ["hero"];
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
   social: {
@@ -43,6 +49,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     redeemImage: "/Assets/medusa2.svg",
   },
   sectionOrder: DEFAULT_SECTION_ORDER,
+  hiddenSections: DEFAULT_HIDDEN_SECTIONS,
 };
 
 export async function getSiteConfig(): Promise<SiteConfig> {
@@ -85,6 +92,11 @@ export async function getSiteConfig(): Promise<SiteConfig> {
           const missing = DEFAULT_SECTION_ORDER.filter((s) => !valid.includes(s));
           return valid.length ? [...valid, ...missing] : DEFAULT_SECTION_ORDER;
         })(),
+        // Respect a saved hidden list; if the field was never set, fall back to
+        // the default (classic banner hero hidden in favor of the series carousel).
+        hiddenSections: Array.isArray(data.hiddenSections)
+          ? data.hiddenSections.filter((s: string): s is SectionId => DEFAULT_SECTION_ORDER.includes(s as SectionId))
+          : DEFAULT_HIDDEN_SECTIONS,
       };
     }
 
