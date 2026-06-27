@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateLastReadChapter, verifyToken } from "@/lib/db";
+import { verifyToken } from "@/lib/db";
+import { updateLastReadChapter } from "@/lib/bookmarks";
+
+// Uses the Authorization header, so it can't be statically rendered.
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
     
     // Update the last read chapter
-    updateLastReadChapter(userId, mangaId, chapterNumber);
+    await updateLastReadChapter(userId, mangaId, chapterNumber);
     
     return NextResponse.json({
       success: true,

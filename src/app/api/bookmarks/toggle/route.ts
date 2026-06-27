@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { toggleBookmark, verifyToken } from "@/lib/db";
+import { verifyToken } from "@/lib/db";
+import { toggleBookmark } from "@/lib/bookmarks";
+
+// Uses the Authorization header, so it can't be statically rendered.
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
     
     // Toggle the bookmark
-    const isBookmarked = toggleBookmark(userId, mangaId, title || 'Unknown', cover);
+    const isBookmarked = await toggleBookmark(userId, mangaId, title || 'Unknown', cover);
     
     return NextResponse.json({
       success: true,

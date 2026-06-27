@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isBookmarked, getLastReadChapter, verifyToken } from "@/lib/db";
+import { verifyToken } from "@/lib/db";
+import { isBookmarked, getLastReadChapter } from "@/lib/bookmarks";
+
+// Uses the Authorization header + request URL, so it can't be statically rendered.
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
@@ -38,10 +42,10 @@ export async function GET(req: NextRequest) {
     }
     
     // Check if the manga is bookmarked
-    const bookmarked = isBookmarked(userId, mangaId);
-    
+    const bookmarked = await isBookmarked(userId, mangaId);
+
     // Get the last read chapter
-    const lastReadChapter = getLastReadChapter(userId, mangaId);
+    const lastReadChapter = await getLastReadChapter(userId, mangaId);
     
     return NextResponse.json({
       success: true,

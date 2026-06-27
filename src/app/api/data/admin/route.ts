@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { getAllMangaViews } from '@/app/services/viewTracker';
 import { getUsers, getBookmarks } from '@/lib/db';
 import type { User } from '@/lib/db';
