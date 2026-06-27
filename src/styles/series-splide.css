@@ -2,6 +2,22 @@
    Kept in a real stylesheet (not styled-jsx) so the !important rules and the
    center-focus opacity transitions reliably apply in production. */
 
+/* Never show a scrollbar under the carousel track. */
+.series-splide,
+.series-splide .splide__track,
+.series-splide .splide__list {
+  overflow: hidden !important;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.series-splide::-webkit-scrollbar,
+.series-splide .splide__track::-webkit-scrollbar,
+.series-splide .splide__list::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+  width: 0;
+  height: 0;
+}
+
 .series-splide .splide__slide {
   width: 20rem !important;
   margin-right: 16px !important;

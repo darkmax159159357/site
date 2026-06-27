@@ -102,7 +102,7 @@ const Homepage = () => {
       // the whole viewport width like mythtoons (cards run edge to edge).
       <section
         id="series-showcase"
-        className="mt-6 sm:mt-8 relative left-1/2 right-1/2 -mx-[50vw] w-screen max-w-[100vw] px-3 sm:px-4"
+        className="mt-6 sm:mt-8 relative left-1/2 right-1/2 -mx-[50vw] w-screen max-w-[100vw] px-3 sm:px-4 overflow-hidden"
       >
         <SeriesShowcase />
       </section>
