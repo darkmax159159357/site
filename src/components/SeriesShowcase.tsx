@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { fetchLastUpdated } from "@/action/fetchKomik";
 import "@splidejs/react-splide/css";
+import "@/styles/series-splide.css";
 
 // Top "Series" showcase — a center-focus looping Splide carousel of large
 // vertical poster cards. Matches mythtoons.org's hero series row exactly:
@@ -180,52 +181,6 @@ export default function SeriesShowcase() {
           );
         })}
       </Splide>
-
-      {/* Scoped center-focus styling (mirrors mythtoons' series-splide CSS) */}
-      <style jsx global>{`
-        .series-splide .splide__slide {
-          width: 20rem !important;
-          margin-right: 16px !important;
-          transition: all 0.5s ease;
-        }
-        .series-splide .latest-poster {
-          width: 20rem;
-          min-height: 24rem;
-        }
-        /* Dim every slide that isn't the centered trio (active/prev/next/clone) */
-        .series-splide
-          .splide__slide:not(.is-active):not(.is-prev):not(.is-next):not([tabindex="-1"])
-          .latest-poster {
-          opacity: 0.2 !important;
-        }
-        .series-splide .splide__slide.is-active .latest-poster,
-        .series-splide .splide__slide.is-prev .latest-poster,
-        .series-splide .splide__slide.is-next .latest-poster,
-        .series-splide .splide__slide[tabindex="-1"] .latest-poster {
-          opacity: 1 !important;
-        }
-        @media (max-width: 1200px) {
-          .series-splide .splide__slide { width: 18rem !important; }
-          .series-splide .latest-poster { width: 18rem; }
-        }
-        @media (max-width: 768px) {
-          .series-splide .splide__slide { width: 16rem !important; }
-          .series-splide .latest-poster { width: 16rem; }
-          /* On mobile only the centered card is bright */
-          .series-splide .splide__slide.is-prev .latest-poster,
-          .series-splide .splide__slide.is-next .latest-poster,
-          .series-splide .splide__slide[tabindex="-1"] .latest-poster {
-            opacity: 0.2 !important;
-          }
-          .series-splide .splide__slide.is-active .latest-poster {
-            opacity: 1 !important;
-          }
-        }
-        @media (max-width: 480px) {
-          .series-splide .splide__slide { width: 14rem !important; }
-          .series-splide .latest-poster { width: 14rem; min-height: auto !important; }
-        }
-      `}</style>
     </div>
   );
 }
