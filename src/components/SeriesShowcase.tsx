@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
@@ -124,36 +123,25 @@ export default function SeriesShowcase() {
           const textColor = info.color === "green" ? "text-green-500" : "text-blue-500";
           return (
             <SplideSlide key={s.id}>
+              {/* Exactly mythtoons' markup: plain background-image divs (no
+                  next/image) so a card always renders even if a cover is slow,
+                  and the cover fades into the card via a mask gradient. */}
               <div
                 data-img={s.cover}
                 className="latest-poster group rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-500 flex flex-col overflow-hidden relative"
               >
                 {/* Blurred cover backdrop */}
-                <Image
-                  src={s.cover}
-                  alt=""
-                  fill
-                  sizes="320px"
-                  referrerPolicy="no-referrer"
-                  unoptimized
-                  className="object-cover blur-3xl opacity-20 pointer-events-none"
+                <div
+                  className="w-full h-full absolute top-0 left-0 bg-cover bg-center blur-3xl opacity-20"
+                  style={{ backgroundImage: `url("${s.cover}")` }}
                 />
                 <Link href={`/manga/${s.id}`} className="relative overflow-hidden" title={s.title}>
-                  {/* Cover faded into the card via mask gradient.
-                      Use a real <Image> (not a background) so the card always
-                      shows even if a cover is slow/broken. aspect-ratio is inline
-                      because Tailwind's JIT purges aspect-[0.80/1] in production. */}
                   <div className="relative overflow-hidden w-full rounded-xl" style={{ aspectRatio: "0.8 / 1" }}>
-                    <Image
-                      src={s.cover}
-                      alt={s.title}
-                      fill
-                      sizes="320px"
-                      referrerPolicy="no-referrer"
-                      unoptimized
-                      className="object-cover w-full h-full absolute top-0 left-0 transition-all"
+                    <div
+                      className="bg-white/5 bg-no-repeat bg-cover w-full h-full absolute top-0 left-0 transition-all"
                       style={{
-                        objectPosition: "0% 23%",
+                        backgroundImage: `url("${s.cover}")`,
+                        backgroundPosition: "0% 23%",
                         WebkitMaskImage: "linear-gradient(rgba(0,0,0,0.9), transparent)",
                         maskImage: "linear-gradient(rgba(0,0,0,0.9), transparent)",
                       }}
