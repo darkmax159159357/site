@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import MangaCard from "./MangaCard";
-import { fetchLastUpdated } from "@/action/fetchKomik";
 import { FaCheckCircle } from "react-icons/fa";
 
 // "Completed Collection" — manhwa whose status is COMPLETED.
@@ -13,8 +12,11 @@ export default function CompletedCollection() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchLastUpdated();
-        const completed = (data || []).filter(
+        // Client-side fetch of the static catalog — reliable on Vercel.
+        const res = await fetch("/Medusa/manga/manga.json", { cache: "no-store" });
+        const all = await res.json();
+        const data = Array.isArray(all) ? all : [];
+        const completed = data.filter(
           (m: any) => (m.status || "").toString().toUpperCase() === "COMPLETED"
         );
         setList(completed.slice(0, 9));

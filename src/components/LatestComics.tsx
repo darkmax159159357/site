@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import MangaCard from "./MangaCard";
 import LoadingIndicator from "./LoadingIndicator";
-import { fetchLastUpdated } from "@/action/fetchKomik";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion"; // Import framer motion for animations
 import { usePagination } from "@/contexts/PaginationContext"; // Import our pagination hook
@@ -204,8 +203,13 @@ const LatestComics = ({ viewAll = false, showPagination = true }) => {
     const loadData = async () => {
       setIsLoading(true);
       try {
-        const data = await fetchLastUpdated();
-        
+        // Client-side fetch of the static catalog — reliable on Vercel
+        // (the fetchLastUpdated server action can return [] on the read-only
+        // serverless filesystem). Covers in manga.json are absolute URLs.
+        const res = await fetch("/Medusa/manga/manga.json", { cache: "no-store" });
+        const raw = await res.json();
+        const data = Array.isArray(raw) ? raw : [];
+
         if (!data || data.length === 0) {
           console.log("No manga data received");
           setAllMangaData([]);
