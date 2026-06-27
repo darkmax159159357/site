@@ -100,13 +100,13 @@ const Homepage = () => {
       </section>
     ),
     premium: (
-      <section id="blog-posts" className="mt-4">
+      <section id="blog-posts" className="mt-8 sm:mt-12">
         <BlogPosts />
         <div className="mt-4"><BlogPosts2 /></div>
       </section>
     ),
     socials: siteSettings.homesocialbuttons ? (
-      <section className="mt-6 sm:mt-8 space-y-4 px-2 sm:px-0">
+      <section className="mt-8 sm:mt-12 space-y-4 px-2 sm:px-0">
         <div className="animate-fadeIn bg-[#0f1014] rounded-xl shadow-lg border border-gray-800/30 overflow-hidden transition-all duration-300 hover:border-[#FF7F57] hover:shadow-[0_0_15px_rgba(255,127,87,0.3)] group">
           <div className="flex flex-row items-center justify-between p-4">
             <div className="flex items-center">
@@ -179,7 +179,7 @@ const Homepage = () => {
       </section>
     ),
     latest: (
-      <section id="latest-comics" className="sm:mt-10 mt-6">
+      <section id="latest-comics" className="mt-8 sm:mt-12">
         <Suspense fallback={<LatestComicsLoader />}>
           <MemoizedLatestComics showPagination={true} />
         </Suspense>

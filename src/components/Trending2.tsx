@@ -10,8 +10,8 @@ import "../styles/neon-theme.css"; // Import neon theme
 import "../styles/fluid-styles.css";
 import "../styles/neon-theme.css";
 
-// Set to false for production 
-const DEBUG_MODE = true;
+// Set to false for production
+const DEBUG_MODE = false;
 
 // Crown icon SVG for #1 badge
 const crownBadge = (

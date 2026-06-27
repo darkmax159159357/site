@@ -17,7 +17,7 @@ export default function CompletedCollection() {
         const completed = (data || []).filter(
           (m: any) => (m.status || "").toString().toUpperCase() === "COMPLETED"
         );
-        setList(completed.slice(0, 8));
+        setList(completed.slice(0, 9));
       } catch (e) {
         console.error("CompletedCollection load error:", e);
       } finally {
@@ -43,13 +43,13 @@ export default function CompletedCollection() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {[...Array(4)].map((_, i) => (
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-3 sm:gap-4">
+          {[...Array(6)].map((_, i) => (
             <div key={i} className="bg-[#222224] rounded-xl aspect-video animate-pulse" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-3 sm:gap-4">
           {list.map((manga, index) => (
             <MangaCard
               key={manga.id || index}

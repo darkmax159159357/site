@@ -201,16 +201,16 @@ const TrendingSection = () => {
     <div className="w-full">
       <div className="mb-4">
         <h2 className="text-xl font-bold mb-2">Most Popular</h2>
-        {/* Blue glowing divider right after the heading */}
+        {/* Orange glowing divider right after the heading (matches site accent) */}
         <div className="relative mb-4">
-          <div className="w-full h-px bg-blue-500/30"></div>
-          <div className="absolute -top-[1px] left-0 w-1/3 h-[2px] bg-gradient-to-r from-blue-500 to-blue-400 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.7)]"></div>
+          <div className="w-full h-px bg-[#FF7F57]/30"></div>
+          <div className="absolute -top-[1px] left-0 w-1/3 h-[2px] bg-gradient-to-r from-[#FF7F57] to-[#FF9F57] rounded-full shadow-[0_0_10px_rgba(255,127,87,0.7)]"></div>
         </div>
       </div>
-      
+
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin h-8 w-8 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+          <div className="animate-spin h-8 w-8 border-2 border-[#FF7F57] rounded-full border-t-transparent"></div>
         </div>
       ) : (
         <>
@@ -255,7 +255,7 @@ const TrendingSection = () => {
 
                     {/* View count badge */}
                     <div className="absolute top-2 right-2 z-10">
-                      <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                      <span className="bg-[#FF7F57]/80 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                           <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
@@ -280,7 +280,7 @@ const TrendingSection = () => {
                   <div className="text-5xl font-bold text-white opacity-90">{index + 1}</div>
                   <div className="flex flex-col">
                     <Link href={`/manga/${manga.mangaId}`}>
-                      <h3 className="text-white text-base font-semibold leading-tight hover:text-blue-400 transition-colors">
+                      <h3 className="text-white text-base font-semibold leading-tight hover:text-[#FF7F57] transition-colors">
                         {manga.title.length > 18 ? `${manga.title.substring(0, 18)}...` : manga.title}
                       </h3>
                     </Link>
