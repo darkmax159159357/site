@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { fetchLastUpdated } from "@/action/fetchKomik";
 import "@splidejs/react-splide/css";
 
-// Top-of-page "Series" showcase — a looping Splide carousel of large vertical
-// poster cards (cover faded into a description). Mirrors mythtoons.org's series
-// carousel that sits above everything else.
+// Top "Series" showcase — a center-focus looping Splide carousel of large
+// vertical poster cards. Matches mythtoons.org's hero series row exactly:
+// fixed 20rem slides, the cover fades (mask gradient) into a big title + status
+// pill + type tag + description, and non-active slides dim to opacity .2.
 
 type Series = {
   id: string;
@@ -19,9 +20,18 @@ type Series = {
   description: string;
 };
 
+// Status pill config (mythtoons: ongoing=green+pulse, completed/upcoming=blue).
+const statusInfo = (status?: string) => {
+  const t = (status || "ongoing").toLowerCase();
+  if (t.includes("completed")) return { color: "blue", text: "Completed", animate: false };
+  if (t.includes("upcoming")) return { color: "blue", text: "Upcoming", animate: false };
+  return { color: "green", text: "Ongoing", animate: true };
+};
+
 export default function SeriesShowcase() {
   const [items, setItems] = useState<Series[]>([]);
   const [loading, setLoading] = useState(true);
+  const splideRef = useRef<any>(null);
 
   useEffect(() => {
     (async () => {
@@ -44,56 +54,80 @@ export default function SeriesShowcase() {
     })();
   }, []);
 
-  if (!loading && items.length === 0) return null;
-
   if (loading) {
     return (
-      <div className="flex gap-4 overflow-hidden">
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="shrink-0 w-1/2 sm:w-1/3 lg:w-1/5 aspect-[0.8/1] bg-white/5 rounded-xl animate-pulse"
-          />
-        ))}
+      <div className="w-full h-96 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500" />
       </div>
     );
   }
 
+  if (items.length === 0) return null;
+
+  const go = (dir: "<" | ">") => splideRef.current?.splide?.go(dir);
+
   return (
-    <div className="w-full overflow-hidden series-splide">
+    <div className="w-full overflow-hidden relative series-splide">
+      {/* Prev / Next arrows (mythtoons purple) */}
+      <button
+        onClick={() => go("<")}
+        aria-label="Previous slide"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-purple-600/80 hover:bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+      >
+        <span className="text-2xl font-bold leading-none">‹</span>
+      </button>
+      <button
+        onClick={() => go(">")}
+        aria-label="Next slide"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-purple-600/80 hover:bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+      >
+        <span className="text-2xl font-bold leading-none">›</span>
+      </button>
+
       <Splide
+        ref={splideRef}
         options={{
           type: "loop",
           perPage: 5,
           perMove: 1,
           gap: "1rem",
+          focus: "center",
+          trimSpace: false,
           autoplay: true,
-          interval: 4500,
+          interval: 5000,
           pauseOnHover: true,
+          pauseOnFocus: false,
           arrows: false,
           pagination: false,
           drag: true,
-          speed: 600,
+          snap: true,
+          speed: 900,
+          easing: "cubic-bezier(0.25, 1, 0.5, 1)",
           breakpoints: {
-            1024: { perPage: 4 },
-            768: { perPage: 3 },
-            480: { perPage: 2 },
+            1200: { perPage: 4, gap: "1rem" },
+            768: { perPage: 3, gap: "1rem" },
+            480: { perPage: 2, gap: "1rem" },
           },
         }}
         aria-roledescription="carousel"
       >
         {items.map((s) => {
-          const isOngoing = s.status.toUpperCase() === "ONGOING";
+          const info = statusInfo(s.status);
+          const dotColor = info.color === "green" ? "bg-green-500" : "bg-blue-500";
+          const textColor = info.color === "green" ? "text-green-500" : "text-blue-500";
           return (
             <SplideSlide key={s.id}>
-              <div className="group latest-poster rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-500 flex flex-col overflow-hidden relative">
+              <div
+                data-img={s.cover}
+                className="latest-poster group rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-500 flex flex-col overflow-hidden relative"
+              >
                 {/* Blurred cover backdrop */}
                 <div
                   className="w-full h-full absolute top-0 left-0 bg-cover bg-center blur-3xl opacity-20"
                   style={{ backgroundImage: `url(${s.cover})` }}
                 />
                 <Link href={`/manga/${s.id}`} className="relative overflow-hidden" title={s.title}>
-                  {/* Cover faded into the card */}
+                  {/* Cover faded into the card via mask gradient */}
                   <div className="relative overflow-hidden aspect-[0.80/1] w-full rounded-xl">
                     <div
                       className="bg-white/5 bg-no-repeat bg-cover bg-[position:0%_23%] w-full h-full absolute top-0 left-0 transition-all"
@@ -109,17 +143,13 @@ export default function SeriesShowcase() {
                       </div>
                       <div className="flex gap-1.5 justify-start items-center">
                         <div className="flex gap-1.5 justify-center items-center w-fit px-2 h-5 bg-white/15 rounded-full">
-                          <div
-                            className={`w-2 h-2 rounded-full ${isOngoing ? "bg-green-500" : "bg-amber-500"}`}
-                          >
-                            <div
-                              className={`w-full h-full animate-ping rounded-full ${isOngoing ? "bg-green-500" : "bg-amber-500"}`}
-                            />
+                          <div className={`relative w-2 h-2 rounded-full ${dotColor}`}>
+                            {info.animate && (
+                              <div className={`w-full h-full animate-ping rounded-full ${dotColor}`} />
+                            )}
                           </div>
-                          <div
-                            className={`text-xs font-medium uppercase ${isOngoing ? "text-green-500" : "text-amber-500"}`}
-                          >
-                            {isOngoing ? "Ongoing" : "Completed"}
+                          <div className={`text-xs font-medium uppercase ${textColor}`}>
+                            {info.text}
                           </div>
                         </div>
                       </div>
@@ -145,6 +175,53 @@ export default function SeriesShowcase() {
           );
         })}
       </Splide>
+
+      {/* Scoped center-focus styling (mirrors mythtoons' series-splide CSS) */}
+      <style jsx global>{`
+        .series-splide .splide__slide {
+          width: 20rem !important;
+          margin-right: 16px !important;
+          transition: all 0.5s ease;
+        }
+        .series-splide .latest-poster {
+          width: 20rem;
+          min-height: 24rem;
+        }
+        /* Dim every slide that isn't the centered trio (active/prev/next/clone) */
+        .series-splide
+          .splide__slide:not(.is-active):not(.is-prev):not(.is-next):not([tabindex="-1"])
+          .latest-poster {
+          opacity: 0.2 !important;
+        }
+        .series-splide .splide__slide.is-active .latest-poster,
+        .series-splide .splide__slide.is-prev .latest-poster,
+        .series-splide .splide__slide.is-next .latest-poster,
+        .series-splide .splide__slide[tabindex="-1"] .latest-poster {
+          opacity: 1 !important;
+        }
+        @media (max-width: 1200px) {
+          .series-splide .splide__slide { width: 18rem !important; }
+          .series-splide .latest-poster { width: 18rem; }
+        }
+        @media (max-width: 768px) {
+          .series-splide .splide__slide { width: 16rem !important; }
+          .series-splide .latest-poster { width: 16rem; }
+          /* On mobile only the centered card is bright */
+          .series-splide .splide__slide.is-prev .latest-poster,
+          .series-splide .splide__slide.is-next .latest-poster,
+          .series-splide .splide__slide[tabindex="-1"] .latest-poster {
+            opacity: 0.2 !important;
+          }
+          .series-splide .splide__slide.is-active .latest-poster {
+            opacity: 1 !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .series-splide .splide__slide { width: 14rem !important; }
+          .series-splide .latest-poster { width: 14rem; min-height: auto !important; }
+          .series-splide .latest-poster .aspect-\\[0\\.80\\/1\\] { aspect-ratio: 0.8 / 1.1 !important; }
+        }
+      `}</style>
     </div>
   );
 }
