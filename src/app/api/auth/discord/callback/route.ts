@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+export const dynamic = "force-dynamic";
 import { auth, db } from '@/lib/firebase';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { signInWithCustomToken } from 'firebase/auth';

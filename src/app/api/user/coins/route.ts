@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { findUserById, updateUser, verifyToken } from "@/lib/db";
 
 // GET endpoint to retrieve user's coins
