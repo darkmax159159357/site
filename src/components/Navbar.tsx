@@ -12,6 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import UserProfileDropdown from "./UserProfileDropdown";
 import Image from "next/image";
 import { createPortal } from "react-dom";
+import "@/styles/navbar.css";
 
 // Add keyframe animations for the mobile menu
 const menuAnimations = `
@@ -126,7 +127,7 @@ const Navbar = () => {
               alt="MedusaScans Logo"
               width={64}
               height={64}
-              className="rounded h-12 w-12 md:h-[56px] md:w-[56px] object-contain"
+              className="rounded h-14 w-14 md:h-[60px] md:w-[60px] object-contain"
               priority
             />
           </a>
@@ -165,9 +166,20 @@ const Navbar = () => {
 
           {/* Right cluster */}
           <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2">
-            {/* Content-mode segmented toggle (Home / New / Complete) */}
-            <div className="hidden md:block">
-              <div className="relative flex items-center rounded-full bg-zinc-900/95 shadow-[0_2px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl overflow-hidden h-9 p-1 min-w-[220px]">
+            {/* Content-mode segmented toggle (Home / New / Complete) — full
+                desktop version with amber glow, hairlines, pulse + particles. */}
+            <div className="hidden xl:block">
+              <div className="content-mode-toggle relative flex items-center rounded-full bg-zinc-900/95 shadow-[0_2px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl overflow-hidden h-9 p-1 min-w-[220px]">
+                {/* Amber base tint */}
+                <div className="absolute inset-0 rounded-full transition-all duration-500 pointer-events-none" style={{ background: "rgba(245,158,11,0.15)" }} />
+                {/* Blurred amber glow that follows the active segment */}
+                <div
+                  className="absolute inset-0 rounded-full opacity-40 blur-2xl transition-all duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(circle at ${16.666 + activeModeIndex * 33.333}% 50%, rgba(245,158,11,0.25), transparent 60%)` }}
+                />
+                {/* Top / bottom hairlines */}
+                <div className="absolute -top-px left-4 w-8 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                <div className="absolute -bottom-px right-4 w-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                 {/* Sliding amber indicator */}
                 <div
                   className="absolute top-1 bottom-1 rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500"
@@ -175,10 +187,11 @@ const Navbar = () => {
                     width: "calc(33.333% - 6px)",
                     left: `calc(${activeModeIndex * 33.333}% + 3px)`,
                     boxShadow:
-                      "rgba(245,158,11,0.31) 0px 0px 20px, rgba(255,255,255,0.25) 0px 1px 0px inset, rgba(0,0,0,0.2) 0px -1px 0px inset",
+                      "rgba(245,158,11,0.314) 0px 0px 20px, rgba(245,158,11,0.125) 0px 0px 40px, rgba(255,255,255,0.25) 0px 1px 0px inset, rgba(0,0,0,0.2) 0px -1px 0px inset",
                   }}
                 >
                   <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/20 via-transparent to-black/15" />
+                  <div className="absolute inset-0 rounded-full animate-pulse opacity-30" style={{ boxShadow: "rgba(245,158,11,0.376) 0px 0px 12px" }} />
                 </div>
                 {contentModes.map((m) => {
                   const isActive = contentMode === m.id;
@@ -187,15 +200,21 @@ const Navbar = () => {
                       key={m.id}
                       onClick={() => setContentMode(m.id)}
                       title={`Show ${m.label.toLowerCase()}`}
-                      className={`relative z-10 flex-1 flex items-center justify-center gap-1.5 rounded-full transition-all duration-300 py-1.5 px-3 text-xs min-w-[64px] ${
+                      className={`relative z-10 flex-1 flex items-center justify-center gap-1.5 rounded-full transition-all duration-300 py-1.5 px-4 text-xs min-w-[68px] ${
                         isActive ? "text-white font-semibold" : "text-zinc-400 hover:text-zinc-200"
                       }`}
                     >
-                      <m.Icon className={`shrink-0 h-3.5 w-3.5 ${isActive ? "scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" : ""}`} aria-hidden="true" />
+                      <m.Icon className={`shrink-0 transition-all duration-300 h-3.5 w-3.5 ${isActive ? "scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" : ""}`} aria-hidden="true" />
                       <span className="font-medium">{m.label}</span>
                     </button>
                   );
                 })}
+                {/* Floating particles */}
+                <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+                  <div className="absolute w-1 h-1 rounded-full bg-white/30 animate-float-particle-1" style={{ left: "20%", top: "30%" }} />
+                  <div className="absolute w-0.5 h-0.5 rounded-full bg-white/20 animate-float-particle-2" style={{ left: "70%", top: "60%" }} />
+                  <div className="absolute w-1 h-1 rounded-full bg-white/15 animate-float-particle-3" style={{ left: "50%", top: "40%" }} />
+                </div>
               </div>
             </div>
 
