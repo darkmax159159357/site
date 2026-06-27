@@ -79,10 +79,11 @@ const Navbar = () => {
       
       <DialogAlert handler={handleOpen} open={open} setOpen={setOpen} />
 
-      <header className="relative">
-        {/* Purple gradient overlay */}
-        <div 
-          style={{ 
+      {/* Sticky top bar — mirrors mythtoons.org (solid #0f0f0f + purple wash) */}
+      <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#0f0f0f] shadow-sm relative">
+        {/* Purple gradient wash from the left */}
+        <div
+          style={{
             position: 'absolute',
             top: 0,
             left: 0,
@@ -90,71 +91,82 @@ const Navbar = () => {
             height: '100%',
             background: 'linear-gradient(90deg, rgba(139, 92, 246, 0.15) 0%, rgba(91, 33, 182, 0.08) 30%, rgba(0, 0, 0, 0) 70%)',
             zIndex: 0,
+            pointerEvents: 'none',
           }}
         />
-        
-        <nav className="w-[95%] sm:w-[90%] m-auto py-2 sm:py-3 flex gap-3 sm:gap-4 items-center justify-between mt-2 sm:mt-4 relative z-10">
-          <div className="flex items-center gap-3 sm:gap-10 justify-between">
-            <div className="logo">
-              <a href="/">
-                <Image 
-                  src="/medusa_scans_logo.png" 
-                  alt="MedusaScans Logo" 
-                  width={70} 
-                  height={35}
-                  className="object-contain h-auto"
-                  priority
-                />
-              </a>
-            </div>
-            <ul className="md:flex md:gap-8 hidden items-center">
-              {navlink.map((item, i) => (
-                isExternalLink(item.path) ? (
-                  <a 
-                    href={item.path} 
-                    key={i}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="opacity-90 font-karla dark:text-white transition-colors duration-300 hover:text-orange-400 text-white font-semibold text-sm"
+
+        <div className="flex h-16 items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Mobile menu button (left, mobile only) */}
+          <button
+            ref={menuButtonRef}
+            className="inline-flex items-center justify-center h-9 w-9 mr-2 lg:hidden rounded-md hover:bg-white/10 transition-colors text-white"
+            onClick={handleOpenMenu}
+            aria-label="Toggle menu"
+            aria-expanded={openMenu}
+            aria-controls="mobile-menu"
+            style={{ zIndex: 1000001 }}
+          >
+            <IoMenu className="h-6 w-6" />
+          </button>
+
+          {/* Logo */}
+          <a className="mr-2 lg:mr-4 xl:mr-6 flex items-center shrink-0" href="/">
+            <Image
+              src="/medusa_scans_logo.png"
+              alt="MedusaScans Logo"
+              width={48}
+              height={48}
+              className="rounded h-11 w-11 md:h-12 md:w-12 object-contain"
+              priority
+            />
+          </a>
+
+          {/* Desktop nav links (pill style) */}
+          <nav className="hidden lg:flex items-center gap-2">
+            {navlink.map((item, i) =>
+              isExternalLink(item.path) ? (
+                <a
+                  href={item.path}
+                  key={i}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 xl:px-4 py-2 text-sm font-medium transition-colors rounded-xl text-gray-300 hover:text-white hover:bg-gray-600/30"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <NavLink href={item.path} key={i}>
+                  <span
+                    className={`px-3 xl:px-4 py-2 text-sm font-medium transition-colors rounded-xl ${
+                      path === item.path
+                        ? "text-orange-500"
+                        : "text-gray-300 hover:text-white hover:bg-gray-600/30"
+                    }`}
                   >
                     {item.name}
-                  </a>
-                ) : (
-                  <NavLink href={item.path} key={i}>
-                    <li
-                      className={`opacity-90 font-karla dark:text-white transition-colors duration-300 hover:text-orange-400 ${
-                        path === item.path 
-                          ? "text-orange-500 border-b-2 border-orange-500 pb-1" 
-                          : "text-white"
-                      } font-semibold text-sm`}
-                    >
-                      {item.name}
-                    </li>
-                  </NavLink>
-                )
-              ))}
-            </ul>
-          </div>
+                  </span>
+                </NavLink>
+              )
+            )}
+          </nav>
 
-          <div className="flex gap-3 sm:gap-5 md:gap-6 items-center">
-            {/* Discord Icon */}
+          {/* Right cluster: Discord, Search, User */}
+          <div className="ml-auto flex items-center gap-3">
             <a
               href="https://discord.gg/2Ssehz7GNa"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-transform duration-300 hover:scale-110 block text-[#5865F2] hover:text-[#7289da]"
+              className="inline-flex items-center justify-center h-9 w-9 rounded-md text-[#5865F2] hover:text-[#7289da] hover:bg-white/10 transition-colors"
               title="Join our Discord"
             >
               <FaDiscord className="w-5 h-5" />
             </a>
-            
-            {path === "/search" ? (
-              ""
-            ) : (
+
+            {path === "/search" ? null : (
               <button
                 name="button"
                 aria-label="search"
-                className="search transition-transform duration-300 hover:scale-110"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-md text-white hover:bg-white/10 transition-colors"
                 onClick={handleOpen}
               >
                 <svg
@@ -163,7 +175,7 @@ const Navbar = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5 text-white"
+                  className="w-5 h-5"
                 >
                   <path
                     strokeLinecap="round"
@@ -173,8 +185,7 @@ const Navbar = () => {
                 </svg>
               </button>
             )}
-            
-            {/* User profile dropdown - visible on all screen sizes */}
+
             {user ? (
               <div className="block">
                 <UserProfileDropdown />
@@ -182,7 +193,7 @@ const Navbar = () => {
             ) : (
               <a
                 href="/auth"
-                className="transition-transform duration-300 hover:scale-110 block"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-md text-white hover:bg-white/10 transition-colors"
                 title="Sign In"
               >
                 <svg
@@ -191,7 +202,7 @@ const Navbar = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5 text-white"
+                  className="w-5 h-5"
                 >
                   <path
                     strokeLinecap="round"
@@ -201,28 +212,8 @@ const Navbar = () => {
                 </svg>
               </a>
             )}
-            
-            {/* Mobile menu button - visible only on small screens */}
-            <div className="block md:hidden relative">
-              <button
-                ref={menuButtonRef}
-                className={`hamburger p-2 rounded-lg hover:cursor-pointer relative transition-all duration-300 ${openMenu ? 'bg-gradient-to-r from-purple-600/20 to-orange-500/20' : 'bg-[#272931]/80 hover:bg-gradient-to-r hover:from-[#272931] hover:to-[#2f2f3d]'}`}
-                onClick={handleOpenMenu}
-                aria-label="Toggle menu"
-                aria-expanded={openMenu}
-                aria-controls="mobile-menu"
-                style={{ zIndex: 1000001 }}
-              >
-                <div className="w-6 flex flex-col items-center justify-center gap-1.5">
-                  <span className={`block h-0.5 w-6 bg-gradient-to-r from-orange-400 to-pink-500 transition-all duration-300 ${openMenu ? 'rotate-45 translate-y-2 w-7' : ''}`}></span>
-                  <span className={`block h-0.5 w-6 bg-gradient-to-r from-orange-400 to-pink-500 transition-opacity duration-300 ${openMenu ? 'opacity-0' : 'opacity-100'}`}></span>
-                  <span className={`block h-0.5 w-6 bg-gradient-to-r from-orange-400 to-pink-500 transition-all duration-300 ${openMenu ? '-rotate-45 -translate-y-2 w-7' : ''}`}></span>
-                </div>
-              </button>
-            </div>
           </div>
-        </nav>
-        <div className="border-b border-gray-800 w-[95%] sm:w-[90%] mx-auto opacity-30 mt-0.5 relative z-10"></div>
+        </div>
       </header>
 
       {/* Mobile Menu with Portal */}
