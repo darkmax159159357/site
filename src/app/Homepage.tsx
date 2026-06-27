@@ -11,6 +11,7 @@ import ResponsiveLayout from "@/components/ResponsiveLayout";
 import Trending2 from "@/components/Trending2";
 import CompletedCollection from "@/components/CompletedCollection";
 import PinnedCollection from "@/components/PinnedCollection";
+import SeriesShowcase from "@/components/SeriesShowcase";
 import BlogPosts from "@/components/BlogPosts";
 import BlogPosts2 from "@/components/BlogPosts2";
 import { FaDiscord, FaShareAlt } from "react-icons/fa";
@@ -93,6 +94,11 @@ const Homepage = () => {
   // Each homepage panel keyed by its SectionId, so we can render them in the
   // dashboard-configured order (siteConfig.sectionOrder).
   const sectionMap: Record<string, React.ReactNode> = {
+    series: (
+      <section id="series-showcase" className="mt-6 sm:mt-8">
+        <SeriesShowcase />
+      </section>
+    ),
     hero: (
       <section id="hero-slider" className="mt-6 sm:mt-10">
         <HeroSlider />

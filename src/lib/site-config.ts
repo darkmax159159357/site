@@ -3,6 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
 // Homepage section identifiers (the panels that can be reordered/toggled).
 export type SectionId =
+  | "series"       // SeriesShowcase -> top carousel of large vertical poster cards
   | "hero"
   | "premium"      // BlogPosts "Unlock Premium"
   | "socials"
@@ -27,9 +28,9 @@ export type SiteConfig = {
   sectionOrder: SectionId[];
 };
 
-// Default order mirrors mythtoons: hero, premium, socials, pinned, latest, completed, popular, toprated.
+// Default order mirrors mythtoons: series carousel up top, then hero, premium, socials, etc.
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
-  "hero", "premium", "socials", "pinned", "latest", "completed", "popular", "toprated",
+  "series", "hero", "premium", "socials", "pinned", "latest", "completed", "popular", "toprated",
 ];
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
