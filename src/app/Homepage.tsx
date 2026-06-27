@@ -98,7 +98,12 @@ const Homepage = () => {
     // is the top spotlight. "hero" keeps the classic banner slider available for
     // anyone who reorders it back in from the dashboard.
     series: (
-      <section id="series-showcase" className="mt-6 sm:mt-8">
+      // Full-bleed: break out of the max-w-7xl container so the carousel spans
+      // the whole viewport width like mythtoons (cards run edge to edge).
+      <section
+        id="series-showcase"
+        className="mt-6 sm:mt-8 relative left-1/2 right-1/2 -mx-[50vw] w-screen max-w-[100vw] px-3 sm:px-4"
+      >
         <SeriesShowcase />
       </section>
     ),
