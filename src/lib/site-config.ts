@@ -6,11 +6,11 @@ export type SectionId =
   | "hero"
   | "premium"      // BlogPosts "Unlock Premium"
   | "socials"
-  | "pinned"       // Pinned Collection (Editor's Picks, top-rated polaroids)
-  | "popular"      // TrendingSection "Most Popular"
+  | "pinned"       // PinnedCollection -> "Editor's Choice" (featured completed series)
+  | "popular"      // TrendingSection -> "Most Popular" (Splide center-focus carousel)
   | "latest"       // LatestComics "Latest Updates"
   | "completed"    // Completed Collection
-  | "toprated";    // Trending2 "Top Rated"
+  | "toprated";    // Trending2 -> "Trending Now" (featured + TOP SERIES medal grid)
 
 export type SiteConfig = {
   social: {
