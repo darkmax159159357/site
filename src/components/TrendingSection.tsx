@@ -22,7 +22,7 @@ interface MangaItem {
 const getTypeBadge = (type: string = "Manhwa") => {
   const t = (type || "Manhwa").toUpperCase();
   return (
-    <span className="absolute top-2 left-2 z-[101] bg-black/70 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded">
+    <span className="absolute top-2 left-2 px-2 py-1 rounded-[6px] text-[10px] sm:text-xs text-white bg-black/30 backdrop-blur-md border border-white/20 shadow-lg z-[110]">
       {t}
     </span>
   );
