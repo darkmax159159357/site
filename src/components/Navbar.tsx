@@ -2,17 +2,31 @@
 import DialogAlert from "./ui/DialogAlert";
 import useModal from "@/hooks/useModal";
 import { usePathname } from "next/navigation";
-import { navlink, navlinkMobile, userMenuLinks } from "./utils/NavLink";
+import { userMenuLinks } from "./utils/NavLink";
 import NavLink from "./navlink/NavLink";
 import { IoMenu } from "react-icons/io5";
 import { FaDiscord } from "react-icons/fa";
-import { Home as HomeIcon, Library, Gift, Coins, LayoutGrid, CheckCircle2, Bell } from "lucide-react";
+import {
+  Home as HomeIcon, Library, Gift, Coins, LayoutGrid, CheckCircle2, Bell,
+  BookOpen, Star, Flame, Heart, Bookmark, Tag, Sparkles, ShoppingBag, Crown,
+  Newspaper, Compass, Trophy, type LucideIcon,
+} from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import UserProfileDropdown from "./UserProfileDropdown";
 import Image from "next/image";
 import { createPortal } from "react-dom";
+import { getSiteConfig, DEFAULT_NAV_TABS, NavTab } from "@/lib/site-config";
 import "@/styles/navbar.css";
+
+// Icon name -> lucide component, used by dashboard-managed nav tabs.
+const NAV_ICONS: Record<string, LucideIcon> = {
+  home: HomeIcon, library: Library, gift: Gift, coins: Coins, book: BookOpen,
+  star: Star, flame: Flame, heart: Heart, bookmark: Bookmark, tag: Tag,
+  sparkles: Sparkles, shop: ShoppingBag, crown: Crown, news: Newspaper,
+  compass: Compass, trophy: Trophy, grid: LayoutGrid,
+};
+export const NAV_ICON_NAMES = Object.keys(NAV_ICONS);
 
 // Add keyframe animations for the mobile menu
 const menuAnimations = `
@@ -45,15 +59,20 @@ const Navbar = () => {
   const [contentMode, setContentMode] = useState<"home" | "new" | "complete">("home");
   const activeModeIndex = contentModes.findIndex((m) => m.id === contentMode);
 
-  // Lucide icon for each main nav link, keyed by its path.
-  const linkIcon = (path: string) => {
-    switch (path) {
-      case "/genre": return Library;        // Series
-      case "/redeem": return Gift;          // Redeem
-      case "/coins": return Coins;          // Store / Coin Shop
-      default: return HomeIcon;             // Home + fallback
-    }
-  };
+  // Navbar tabs come from the dashboard (Firestore site_config). Until loaded we
+  // render the mythtoons defaults so there's never an empty navbar.
+  const [navTabs, setNavTabs] = useState<NavTab[]>(DEFAULT_NAV_TABS);
+  useEffect(() => {
+    let alive = true;
+    getSiteConfig()
+      .then((cfg) => { if (alive && Array.isArray(cfg.navTabs) && cfg.navTabs.length) setNavTabs(cfg.navTabs); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  const visibleTabs = navTabs.filter((t) => !t.hidden);
+
+  // Lucide icon for a tab by its icon name (falls back to Home).
+  const tabIcon = (name?: string) => NAV_ICONS[name || "home"] || HomeIcon;
 
   // Handle menu toggling
   const handleOpenMenu = () => setOpenMenu(!openMenu);
@@ -132,32 +151,31 @@ const Navbar = () => {
             />
           </a>
 
-          {/* Desktop nav links (icon + label pills) */}
+          {/* Desktop nav links (icon + label pills) — dashboard-managed tabs */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navlink.map((item, i) => {
-              const Icon = linkIcon(item.path);
-              const isCoin = item.path === "/coins";
-              const active = path === item.path;
-              const cls = isCoin
+            {visibleTabs.map((tab) => {
+              const Icon = tabIcon(tab.icon);
+              const active = path === tab.path;
+              const cls = tab.highlight
                 ? "group flex items-center gap-1.5 px-3 xl:px-4 py-2 font-medium transition-all duration-200 rounded-lg text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 text-sm font-semibold"
                 : `group flex items-center gap-1.5 px-3 xl:px-4 py-2 font-medium transition-all duration-200 rounded-lg text-sm ${
                     active ? "text-white bg-white/[0.08]" : "text-[#9f9fa5] hover:text-white hover:bg-white/[0.05]"
                   }`;
-              const iconCls = isCoin
+              const iconCls = tab.highlight
                 ? "h-4 w-4 text-amber-500/80"
                 : `h-4 w-4 transition-colors duration-200 ${active ? "text-amber-400" : "text-zinc-500 group-hover:text-zinc-300"}`;
               const inner = (
                 <>
                   <Icon className={iconCls} aria-hidden="true" />
-                  {item.name}
+                  {tab.name}
                 </>
               );
-              return isExternalLink(item.path) ? (
-                <a key={i} href={item.path} target="_blank" rel="noopener noreferrer" className={cls}>
+              return tab.external || isExternalLink(tab.path) ? (
+                <a key={tab.id} href={tab.path} target="_blank" rel="noopener noreferrer" className={cls}>
                   {inner}
                 </a>
               ) : (
-                <NavLink href={item.path} key={i}>
+                <NavLink href={tab.path} key={tab.id}>
                   <span className={cls}>{inner}</span>
                 </NavLink>
               );
@@ -303,24 +321,38 @@ const Navbar = () => {
             
             {/* Menu Items */}
             <div className="flex flex-col py-4">
-              {navlinkMobile.map((link, index) => (
-                <div
-                  key={index}
-                  className={`px-6 py-3.5 hover:bg-white/5 transition-all duration-300 cursor-pointer ${
-                    path === link.path 
-                      ? "text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 border-l-2 border-orange-500" 
-                      : "text-white border-l-2 border-transparent"
-                  }`}
-                  onClick={() => setOpenMenu(false)}
-                  style={{
-                    animation: `fadeIn 0.5s ease-out ${0.1 + index * 0.1}s both`
-                  }}
-                >
-                  <NavLink href={link.path}>
-                    <span className="font-medium">{link.name}</span>
-                  </NavLink>
-                </div>
-              ))}
+              {visibleTabs.map((tab, index) => {
+                const Icon = tabIcon(tab.icon);
+                const rowCls = `px-6 py-3.5 hover:bg-white/5 transition-all duration-300 cursor-pointer flex items-center gap-3 ${
+                  path === tab.path
+                    ? "text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 border-l-2 border-orange-500"
+                    : "text-white border-l-2 border-transparent"
+                }`;
+                const inner = (
+                  <>
+                    <Icon className="h-4 w-4 text-zinc-400 shrink-0" aria-hidden="true" />
+                    <span className="font-medium">{tab.name}</span>
+                  </>
+                );
+                return (
+                  <div
+                    key={tab.id}
+                    className={rowCls}
+                    onClick={() => setOpenMenu(false)}
+                    style={{ animation: `fadeIn 0.5s ease-out ${0.1 + index * 0.1}s both` }}
+                  >
+                    {tab.external || isExternalLink(tab.path) ? (
+                      <a href={tab.path} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 w-full">
+                        {inner}
+                      </a>
+                    ) : (
+                      <NavLink href={tab.path}>
+                        <span className="flex items-center gap-3">{inner}</span>
+                      </NavLink>
+                    )}
+                  </div>
+                );
+              })}
               
               {/* User Menu Items */}
               {user && (

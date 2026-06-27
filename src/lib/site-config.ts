@@ -13,6 +13,19 @@ export type SectionId =
   | "completed"    // Completed Collection
   | "toprated";    // Trending2 -> "Trending Now" (featured + TOP SERIES medal grid)
 
+// A single navbar tab (dashboard-managed). `icon` is a name from the navbar's
+// icon map (see Navbar.tsx); `external` opens the link in a new tab; `highlight`
+// gives it the amber "Coin Shop" styling.
+export type NavTab = {
+  id: string;
+  name: string;
+  path: string;
+  icon: string;
+  external?: boolean;
+  highlight?: boolean;
+  hidden?: boolean;
+};
+
 export type SiteConfig = {
   social: {
     discord: string;
@@ -28,7 +41,18 @@ export type SiteConfig = {
   sectionOrder: SectionId[];
   // Sections toggled OFF from the dashboard (hidden from the homepage).
   hiddenSections: SectionId[];
+  // Navbar tabs (dashboard-managed). Order here = order in the navbar.
+  navTabs: NavTab[];
 };
+
+// Default tabs mirror mythtoons: Home / Series / Redeem / Coin Shop.
+// The dashboard can add/edit/remove/reorder these.
+export const DEFAULT_NAV_TABS: NavTab[] = [
+  { id: "home", name: "Home", path: "/", icon: "home" },
+  { id: "series", name: "Series", path: "/genre", icon: "library" },
+  { id: "redeem", name: "Redeem", path: "/redeem", icon: "gift" },
+  { id: "coinshop", name: "Coin Shop", path: "/coins", icon: "coins", highlight: true },
+];
 
 // Default order mirrors mythtoons: series carousel up top, then hero, premium, socials, etc.
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
@@ -50,6 +74,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   },
   sectionOrder: DEFAULT_SECTION_ORDER,
   hiddenSections: DEFAULT_HIDDEN_SECTIONS,
+  navTabs: DEFAULT_NAV_TABS,
 };
 
 export async function getSiteConfig(): Promise<SiteConfig> {
@@ -97,6 +122,22 @@ export async function getSiteConfig(): Promise<SiteConfig> {
         hiddenSections: Array.isArray(data.hiddenSections)
           ? data.hiddenSections.filter((s: string): s is SectionId => DEFAULT_SECTION_ORDER.includes(s as SectionId))
           : DEFAULT_HIDDEN_SECTIONS,
+        // Navbar tabs: use the saved list if present, else the mythtoons defaults.
+        navTabs: (() => {
+          const stored = Array.isArray(data.navTabs) ? data.navTabs : null;
+          if (!stored || stored.length === 0) return DEFAULT_NAV_TABS;
+          return stored
+            .filter((t: any) => t && typeof t.name === "string" && typeof t.path === "string")
+            .map((t: any, i: number) => ({
+              id: String(t.id || `tab-${i}`),
+              name: String(t.name),
+              path: String(t.path),
+              icon: String(t.icon || "home"),
+              external: !!t.external,
+              highlight: !!t.highlight,
+              hidden: !!t.hidden,
+            }));
+        })(),
       };
     }
 
