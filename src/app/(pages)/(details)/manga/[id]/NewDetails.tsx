@@ -1680,24 +1680,24 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
                   {lastReadChapter ? (
                     <Link 
                       href={`/read/${id}-ch${lastReadChapter}`}
-                      className="w-full py-3.5 px-4 rounded-xl flex items-center justify-center gap-3 
-                        bg-gradient-to-br from-purple-600/90 to-fuchsia-600/90 
-                        hover:from-purple-500/90 hover:to-fuchsia-500/90
-                        font-medium shadow-lg shadow-purple-900/30 
+                      className="w-full py-3.5 px-4 rounded-xl flex items-center justify-center gap-3
+                        bg-gradient-to-br from-[#FF7F57] to-[#FF5757]
+                        hover:from-[#ff6a3d] hover:to-[#ff4242]
+                        font-medium shadow-lg shadow-[#FF7F57]/30
                         relative overflow-hidden group transition-all duration-300
-                        border border-purple-500/30"
+                        border border-[#FF7F57]/40"
                     >
                       {/* Animated glow effect */}
                       <div className="absolute inset-0 w-full h-full">
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                          bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.4)_0%,rgba(0,0,0,0)_50%)]"></div>
+                          bg-[radial-gradient(circle_at_center,rgba(255,127,87,0.45)_0%,rgba(0,0,0,0)_50%)]"></div>
                       </div>
-                      
+
                       {/* Animated ripple effect on hover */}
-                      <div className="absolute top-0 left-0 right-0 h-full w-[120%] -translate-x-full group-hover:translate-x-full 
+                      <div className="absolute top-0 left-0 right-0 h-full w-[120%] -translate-x-full group-hover:translate-x-full
                         bg-gradient-to-r from-transparent via-white/10 to-transparent transition-all duration-700 ease-in-out"></div>
-                      
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" 
+
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
                         className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300 relative z-10">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                       </svg>
@@ -1706,17 +1706,17 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
                   ) : chapters.length > 0 && (
                     <Link 
                       href={`/read/${chapters[0].chapter_slug || `${id}-ch${chapters[0].number}`}`}
-                      className="w-full py-3.5 px-4 rounded-xl flex items-center justify-center gap-3 
-                        bg-gradient-to-br from-pink-600/90 to-purple-600/90 
-                        hover:from-pink-500/90 hover:to-purple-500/90
-                        font-medium shadow-lg shadow-pink-900/30 
+                      className="w-full py-3.5 px-4 rounded-xl flex items-center justify-center gap-3
+                        bg-gradient-to-br from-[#FF7F57] to-[#FF5757]
+                        hover:from-[#ff6a3d] hover:to-[#ff4242]
+                        font-medium shadow-lg shadow-[#FF7F57]/30
                         relative overflow-hidden group transition-all duration-300
-                        border border-pink-500/30"
+                        border border-[#FF7F57]/40"
                     >
                       {/* Animated glow effect */}
                       <div className="absolute inset-0 w-full h-full">
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                          bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.4)_0%,rgba(0,0,0,0)_50%)]"></div>
+                          bg-[radial-gradient(circle_at_center,rgba(255,127,87,0.45)_0%,rgba(0,0,0,0)_50%)]"></div>
                       </div>
                       
                       {/* Animated ripple effect on hover */}
@@ -2226,15 +2226,10 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
                                   console.log(`Failed to load thumbnail for chapter ${chapter.number}, falling back to cover`);
                                 }}
                               />
-                              {/* For debugging - log the thumbnail URL */}
-                              {(() => {
-                                console.log(`Chapter ${chapter.number} thumbnail: ${chapter.thumbnail || 'using cover fallback'}`);
-                                return null;
-                              })()}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                               
                               {/* Animated glow overlay on hover */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-purple-500/30 to-pink-500/0 
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#FF7F57]/30 to-[#FF5757]/0
                                 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                               
                               {/* Lock overlay for locked chapters */}
@@ -2250,7 +2245,7 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
                           
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-1">
-                              <h3 className="font-semibold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1">
+                              <h3 className="font-semibold text-white group-hover:text-[#FF7F57] transition-colors flex items-center gap-1">
                                 Chapter {chapter.number}
                                 {isNewChapter(chapter) && (
                                   <span className="flex items-center gap-0.5">
@@ -2306,17 +2301,8 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
                             
                             <div className="flex items-center justify-between">
                               <p className="text-white/60 text-xs">
-                                {/* Add debugging */}
                                 {(() => {
                                   const releaseDate = chapter.chapter_release || chapter.added_chap_date || chapter.added_date || chapter.release_date || (chapter.date as string) || null;
-                                  console.log(`Chapter ${chapter.number} date fields:`, {
-                                    chapter_release: chapter.chapter_release,
-                                    added_chap_date: chapter.added_chap_date,
-                                    added_date: chapter.added_date,
-                                    release_date: chapter.release_date,
-                                    date: chapter.date,
-                                    final_used: releaseDate
-                                  });
                                   return formatDate(releaseDate || "N/A");
                                 })()}
                               </p>

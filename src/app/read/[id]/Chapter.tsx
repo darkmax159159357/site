@@ -764,7 +764,7 @@ const Chapter = ({ dataRead, id }: { dataRead: chapterType; id: string }) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#1A1B1E]">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <div className="w-8 h-8 border-4 border-[#FF7F57] border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-white mt-4"></p>
         </div>
       </div>

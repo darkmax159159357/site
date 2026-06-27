@@ -254,7 +254,7 @@ const LockedChapter = ({
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
-          className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#00ccff] rounded-full mix-blend-overlay filter blur-[100px] opacity-30"
+          className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#FF7F57] rounded-full mix-blend-overlay filter blur-[100px] opacity-30"
           animate={{ 
             x: [0, 50, 0], 
             y: [0, 30, 0],
@@ -288,7 +288,7 @@ const LockedChapter = ({
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="z-10 bg-[#0f172a]/90 backdrop-blur-xl p-4 sm:p-8 md:p-10 rounded-xl shadow-2xl w-full max-w-md border border-[#00ccff]/20 text-center shadow-[0_0_15px_rgba(0,204,255,0.3)]"
+        className="z-10 bg-[#0f172a]/90 backdrop-blur-xl p-4 sm:p-8 md:p-10 rounded-xl shadow-2xl w-full max-w-md border border-[#FF7F57]/20 text-center shadow-[0_0_15px_rgba(255,127,87,0.3)]"
       >
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -296,7 +296,7 @@ const LockedChapter = ({
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-full flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 sm:h-16 sm:w-16 text-[#00ccff] drop-shadow-[0_0_8px_#00ccff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 sm:h-16 sm:w-16 text-[#FF7F57] drop-shadow-[0_0_8px_#FF7F57]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
@@ -312,7 +312,7 @@ const LockedChapter = ({
         </motion.h2>
         
         <motion.h1 
-          className="text-2xl sm:text-3xl font-bold text-[#00ccff] mb-4 sm:mb-6 drop-shadow-[0_0_8px_#00ccff]"
+          className="text-2xl sm:text-3xl font-bold text-[#FF7F57] mb-4 sm:mb-6 drop-shadow-[0_0_8px_#FF7F57]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
@@ -328,7 +328,7 @@ const LockedChapter = ({
         >
           {isLoading ? (
             <div className="flex justify-center items-center h-20">
-              <div className="w-8 h-8 border-2 border-[#00ccff] border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-2 border-[#FF7F57] border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : (
             <>
@@ -336,25 +336,25 @@ const LockedChapter = ({
                 <>
                   <p className="text-white mb-4">This chapter will be unlocked for public in:</p>
                   <div className="grid grid-cols-4 gap-1 sm:gap-2 mx-auto max-w-full">
-                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#00ccff]/40 rounded shadow-[0_0_10px_rgba(0,204,255,0.4)] relative overflow-hidden">
-                      <div className="absolute inset-0 bg-[#00ccff]/5"></div>
+                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#FF7F57]/40 rounded shadow-[0_0_10px_rgba(255,127,87,0.4)] relative overflow-hidden">
+                      <div className="absolute inset-0 bg-[#FF7F57]/5"></div>
                       <span className="text-2xl sm:text-4xl font-bold text-white relative z-10">{timeLeft.days.toString().padStart(2, '0')}</span>
-                      <p className="text-[10px] sm:text-xs text-[#00ccff] relative z-10">DAYS</p>
+                      <p className="text-[10px] sm:text-xs text-[#FF7F57] relative z-10">DAYS</p>
                     </div>
-                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#00ccff]/40 rounded shadow-[0_0_10px_rgba(0,204,255,0.4)] relative overflow-hidden">
-                      <div className="absolute inset-0 bg-[#00ccff]/5"></div>
+                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#FF7F57]/40 rounded shadow-[0_0_10px_rgba(255,127,87,0.4)] relative overflow-hidden">
+                      <div className="absolute inset-0 bg-[#FF7F57]/5"></div>
                       <span className="text-2xl sm:text-4xl font-bold text-white relative z-10">{timeLeft.hours.toString().padStart(2, '0')}</span>
-                      <p className="text-[10px] sm:text-xs text-[#00ccff] relative z-10">HOURS</p>
+                      <p className="text-[10px] sm:text-xs text-[#FF7F57] relative z-10">HOURS</p>
                     </div>
-                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#00ccff]/40 rounded shadow-[0_0_10px_rgba(0,204,255,0.4)] relative overflow-hidden">
-                      <div className="absolute inset-0 bg-[#00ccff]/5"></div>
+                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#FF7F57]/40 rounded shadow-[0_0_10px_rgba(255,127,87,0.4)] relative overflow-hidden">
+                      <div className="absolute inset-0 bg-[#FF7F57]/5"></div>
                       <span className="text-2xl sm:text-4xl font-bold text-white relative z-10">{timeLeft.minutes.toString().padStart(2, '0')}</span>
-                      <p className="text-[10px] sm:text-xs text-[#00ccff] relative z-10">MIN</p>
+                      <p className="text-[10px] sm:text-xs text-[#FF7F57] relative z-10">MIN</p>
                     </div>
-                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#00ccff]/40 rounded shadow-[0_0_10px_rgba(0,204,255,0.4)] relative overflow-hidden">
-                      <div className="absolute inset-0 bg-[#00ccff]/5"></div>
+                    <div className="text-center bg-[#0f172a] w-full h-16 sm:h-20 flex flex-col items-center justify-center border border-[#FF7F57]/40 rounded shadow-[0_0_10px_rgba(255,127,87,0.4)] relative overflow-hidden">
+                      <div className="absolute inset-0 bg-[#FF7F57]/5"></div>
                       <span className="text-2xl sm:text-4xl font-bold text-white relative z-10">{timeLeft.seconds.toString().padStart(2, '0')}</span>
-                      <p className="text-[10px] sm:text-xs text-[#00ccff] relative z-10">SEC</p>
+                      <p className="text-[10px] sm:text-xs text-[#FF7F57] relative z-10">SEC</p>
                     </div>
                   </div>
                 </>
@@ -372,7 +372,7 @@ const LockedChapter = ({
           <button
             onClick={handlePurchase}
             disabled={isPurchasing}
-            className="w-full py-3 rounded-lg bg-[#00ccff] hover:bg-[#33d6ff] text-[#000] font-semibold transition-all duration-300 flex items-center justify-center shadow-[0_0_20px_#00ccff] relative overflow-hidden group"
+            className="w-full py-3 rounded-lg bg-[#FF7F57] hover:bg-[#FF9F57] text-[#000] font-semibold transition-all duration-300 flex items-center justify-center shadow-[0_0_20px_#FF7F57] relative overflow-hidden group"
           >
             <span className="absolute inset-0 bg-white/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
             {isPurchasing ? (
@@ -390,7 +390,7 @@ const LockedChapter = ({
           {(!userData?.coins || userData.coins <= 69) && (
             <a
               href="/coins"
-              className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-semibold transition-all duration-300 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+              className="w-full py-3 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold transition-all duration-300 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.5)]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -401,7 +401,7 @@ const LockedChapter = ({
           
           <Link 
             href={`/manga/${mangaId}`} 
-            className="w-full py-3 rounded-lg bg-[#0f172a] hover:bg-[#1e293b] text-white font-medium transition-all duration-300 flex items-center justify-center border border-[#00ccff]/30"
+            className="w-full py-3 rounded-lg bg-[#0f172a] hover:bg-[#1e293b] text-white font-medium transition-all duration-300 flex items-center justify-center border border-[#FF7F57]/30"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
