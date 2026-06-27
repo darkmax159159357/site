@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchLastUpdated } from "@/action/fetchKomik";
 
 // "Editor's Choice" — a featured spotlight (large cover + Start Reading) with a
 // scrollable thumbnail strip to switch the highlighted series. Mirrors
@@ -28,12 +27,16 @@ export default function PinnedCollection() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchLastUpdated();
+        // Client-side fetch of the static catalog — reliable on Vercel
+        // (server action can return [] on the read-only serverless FS).
+        const res = await fetch("/Medusa/manga/manga.json", { cache: "no-store" });
+        const all = await res.json();
+        const data = Array.isArray(all) ? all : [];
         // Prefer completed series (like mythtoons); fall back to everything.
-        const completed = (data || []).filter(
+        const completed = data.filter(
           (m: any) => (m.status || "").toString().toUpperCase() === "COMPLETED"
         );
-        const source = completed.length ? completed : data || [];
+        const source = completed.length ? completed : data;
         const mapped: Pick[] = source.slice(0, 10).map((m: any) => ({
           id: m.id,
           slug: m.id,

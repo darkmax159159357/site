@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { fetchLastUpdated } from "@/action/fetchKomik";
 import "@splidejs/react-splide/css";
 import "@/styles/series-splide.css";
 
@@ -37,15 +37,21 @@ export default function SeriesShowcase() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchLastUpdated();
-        const mapped: Series[] = (data || []).slice(0, 12).map((m: any) => ({
-          id: m.id,
-          title: m.title,
-          cover: m.cover,
-          status: (m.status || "ONGOING").toString(),
-          type: m.type || "Manhwa",
-          description: m.description || "",
-        }));
+        // Client-side fetch of the static catalog — reliable on Vercel
+        // (the server action fetchLastUpdated() can return [] on the
+        // read-only serverless filesystem). Same source as TrendingSection.
+        const res = await fetch("/Medusa/manga/manga.json", { cache: "no-store" });
+        const all = await res.json();
+        const mapped: Series[] = (Array.isArray(all) ? all : [])
+          .slice(0, 12)
+          .map((m: any) => ({
+            id: m.id,
+            title: m.title || "Untitled",
+            cover: m.cover || "/fallback-image.svg",
+            status: (m.status || "ONGOING").toString(),
+            type: m.type || "Manhwa",
+            description: m.description || "",
+          }));
         setItems(mapped);
       } catch (e) {
         console.error("SeriesShowcase load error:", e);
@@ -123,27 +129,36 @@ export default function SeriesShowcase() {
                 className="latest-poster group rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-500 flex flex-col overflow-hidden relative"
               >
                 {/* Blurred cover backdrop */}
-                <div
-                  className="w-full h-full absolute top-0 left-0 bg-cover bg-center blur-3xl opacity-20"
-                  style={{ backgroundImage: `url(${s.cover})` }}
+                <Image
+                  src={s.cover}
+                  alt=""
+                  fill
+                  sizes="320px"
+                  referrerPolicy="no-referrer"
+                  unoptimized
+                  className="object-cover blur-3xl opacity-20 pointer-events-none"
                 />
                 <Link href={`/manga/${s.id}`} className="relative overflow-hidden" title={s.title}>
                   {/* Cover faded into the card via mask gradient.
-                      NOTE: aspect ratio + background position are set inline because
-                      Tailwind's JIT drops arbitrary values like aspect-[0.80/1] and
-                      bg-[position:0%_23%] from the production build (purge), which left
-                      the cards collapsed. Inline styles always apply. */}
+                      Use a real <Image> (not a background) so the card always
+                      shows even if a cover is slow/broken. aspect-ratio is inline
+                      because Tailwind's JIT purges aspect-[0.80/1] in production. */}
                   <div className="relative overflow-hidden w-full rounded-xl" style={{ aspectRatio: "0.8 / 1" }}>
-                    <div
-                      className="bg-white/5 bg-no-repeat bg-cover w-full h-full absolute top-0 left-0 transition-all"
+                    <Image
+                      src={s.cover}
+                      alt={s.title}
+                      fill
+                      sizes="320px"
+                      referrerPolicy="no-referrer"
+                      unoptimized
+                      className="object-cover w-full h-full absolute top-0 left-0 transition-all"
                       style={{
-                        backgroundImage: `url(${s.cover})`,
-                        backgroundPosition: "0% 23%",
+                        objectPosition: "0% 23%",
                         WebkitMaskImage: "linear-gradient(rgba(0,0,0,0.9), transparent)",
                         maskImage: "linear-gradient(rgba(0,0,0,0.9), transparent)",
                       }}
                     />
-                    <div className="flex gap-2 flex-col justify-end h-full w-full px-2">
+                    <div className="relative z-10 flex gap-2 flex-col justify-end h-full w-full px-2">
                       <div className="font-bold text-xl leading-[1.35rem] opacity-95 truncate">
                         {s.title}
                       </div>
