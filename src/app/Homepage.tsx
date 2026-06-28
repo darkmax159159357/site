@@ -211,7 +211,7 @@ const Homepage = () => {
       </section>
     ),
     completed: (
-      <section id="completed" className="mt-8 sm:mt-12">
+      <section id="completed-toons" className="mt-10 sm:mt-16">
         <CompletedCollection />
       </section>
     ),
