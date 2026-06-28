@@ -54,9 +54,12 @@ export const DEFAULT_NAV_TABS: NavTab[] = [
   { id: "coinshop", name: "Coin Shop", path: "/coins", icon: "coins", highlight: true },
 ];
 
-// Default order mirrors mythtoons: series carousel up top, then hero, premium, socials, etc.
+// Default order mirrors mythtoons' current homepage: series carousel up top, then
+// Most Popular, the Share/socials banner, Pinned Collection, and Latest Updates.
+// The extra sections mythtoons no longer shows (premium, completed, toprated) are
+// kept below and remain toggleable from the dashboard.
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
-  "series", "hero", "premium", "socials", "pinned", "latest", "completed", "popular", "toprated",
+  "series", "popular", "socials", "pinned", "latest", "hero", "premium", "completed", "toprated",
 ];
 
 // By default the classic banner hero is hidden, because the series carousel now
