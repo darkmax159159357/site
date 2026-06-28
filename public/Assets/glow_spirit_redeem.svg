@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500" fill="none">
+  <defs>
+    <radialGradient id="rsGlow" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#ff7f57" stop-opacity="0.40"/>
+      <stop offset="55%" stop-color="#ff7f57" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#ff5757" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rsBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE3BE"/>
+      <stop offset="0.45" stop-color="#FFA968"/>
+      <stop offset="1" stop-color="#FF7F57"/>
+    </linearGradient>
+    <linearGradient id="rsSpark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFE2A8"/>
+    </linearGradient>
+    <radialGradient id="rsCoinGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFE9A8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFC24B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rsCoin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE07A"/>
+      <stop offset="0.5" stop-color="#FFC24B"/>
+      <stop offset="1" stop-color="#E89A1C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ambient glow -->
+  <ellipse cx="200" cy="250" rx="175" ry="215" fill="url(#rsGlow)"/>
+
+  <!-- floating glint above the head -->
+  <g>
+    <path d="M200 64
+             C 207 98, 226 117, 260 124
+             C 226 131, 207 150, 200 184
+             C 193 150, 174 131, 140 124
+             C 174 117, 193 98, 200 64 Z"
+          fill="url(#rsSpark)"/>
+    <circle cx="200" cy="124" r="9" fill="#FFF6E2"/>
+  </g>
+
+  <!-- body -->
+  <path d="M112 366
+           C 108 268, 112 200, 150 168
+           C 172 150, 228 150, 250 168
+           C 288 200, 292 268, 288 366
+           Q 266 396 244 366
+           Q 222 396 200 366
+           Q 178 396 156 366
+           Q 134 396 112 366 Z"
+        fill="url(#rsBody)"/>
+
+  <!-- glossy highlight -->
+  <ellipse cx="166" cy="216" rx="42" ry="56" fill="#FFFFFF" opacity="0.18"/>
+
+  <!-- cheeks -->
+  <ellipse cx="158" cy="256" rx="12" ry="8" fill="#FF5C7A" opacity="0.30"/>
+  <ellipse cx="242" cy="256" rx="12" ry="8" fill="#FF5C7A" opacity="0.30"/>
+
+  <!-- eyes (looking down at the coin) -->
+  <circle cx="174" cy="240" r="9" fill="#5A2A1A"/>
+  <circle cx="226" cy="240" r="9" fill="#5A2A1A"/>
+  <circle cx="176" cy="243" r="3" fill="#FFFFFF"/>
+  <circle cx="228" cy="243" r="3" fill="#FFFFFF"/>
+
+  <!-- happy smile -->
+  <path d="M184 262 Q 200 278 216 262" stroke="#5A2A1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- arms reaching in to hold the coin -->
+  <path d="M150 330 q-22 28 8 56 q20 8 34 -10 Z" fill="#FF8C5A"/>
+  <path d="M250 330 q22 28 -8 56 q-20 8 -34 -10 Z" fill="#FF8C5A"/>
+
+  <!-- glowing coin held in hands -->
+  <circle cx="200" cy="372" r="60" fill="url(#rsCoinGlow)"/>
+  <circle cx="200" cy="372" r="38" fill="url(#rsCoin)" stroke="#C97E12" stroke-width="3"/>
+  <circle cx="200" cy="372" r="30" fill="none" stroke="#FFE9A8" stroke-width="2" opacity="0.7"/>
+  <!-- glint mark on the coin -->
+  <path d="M200 350
+           C 203 366, 210 373, 226 376
+           C 210 379, 203 386, 200 402
+           C 197 386, 190 379, 174 376
+           C 190 373, 197 366, 200 350 Z"
+        fill="#FFF6E2"/>
+  <!-- coin shine -->
+  <ellipse cx="186" cy="358" rx="9" ry="5" fill="#FFFFFF" opacity="0.7" transform="rotate(-35 186 358)"/>
+
+  <!-- drifting mini sparkles -->
+  <path d="M312 190 q4 12 16 16 q-12 4 -16 16 q-4 -12 -16 -16 q12 -4 16 -16 Z" fill="#FFD79A" opacity="0.9"/>
+  <path d="M92 182 q3 9 12 12 q-9 3 -12 12 q-3 -9 -12 -12 q9 -3 12 -12 Z" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="306" cy="320" r="4" fill="#FFD79A" opacity="0.8"/>
+  <circle cx="100" cy="318" r="3.5" fill="#FFFFFF" opacity="0.7"/>
+</svg>

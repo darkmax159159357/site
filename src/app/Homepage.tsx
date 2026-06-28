@@ -76,8 +76,8 @@ const Homepage = () => {
     try {
       if (navigator.share) {
         await navigator.share({
-          title: 'Medusa Scans',
-          text: 'Check out Medusa Scans for the best manga reading experience!',
+          title: 'Glint Scans',
+          text: 'Check out Glint Scans for the best manga reading experience!',
           url: window.location.href,
         });
       } else {
@@ -126,7 +126,7 @@ const Homepage = () => {
             <div className="flex items-center">
               <div className="w-1.5 h-16 bg-gradient-to-b from-[#FF7F57] to-[#FF5757] rounded-full mr-4 shadow-[0_0_15px_rgba(255,127,87,0.5)] transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(255,127,87,0.7)]"></div>
               <div>
-                <h3 className="text-white font-semibold text-lg">Share Medusa Scans</h3>
+                <h3 className="text-white font-semibold text-lg">Share Glint Scans</h3>
                 <p className="text-gray-400 text-sm">to your friends</p>
               </div>
             </div>

@@ -61,10 +61,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     getData = await loadMangaDataDirectly(id);
   }
 
-  if (!getData) return { title: "Manga Not Found | MedusaScans" };
+  if (!getData) return { title: "Manga Not Found | GlintScans" };
 
   return {
-    title: `${getData.title} | MedusaScans`,
+    title: `${getData.title} | GlintScans`,
     description: getData.description || "No description available",
     keywords: [getData.title, "manga", "read online", "scanlation", "free manga"],
     openGraph: {

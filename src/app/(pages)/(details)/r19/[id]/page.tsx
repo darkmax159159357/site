@@ -12,10 +12,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = params;
   const getData: detailsDataProps["data"] | null = await fetchDetail(id);
 
-  if (!getData) return { title: "R19 Content Not Found | MedusaScans" };
+  if (!getData) return { title: "R19 Content Not Found | GlintScans" };
 
   return {
-    title: `${getData.title} | MedusaScans`,
+    title: `${getData.title} | GlintScans`,
     description: getData.description || "No description available",
     keywords: [getData.title, "r19", "adult content", "read online", "scanlation", "free manga"],
     openGraph: {

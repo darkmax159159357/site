@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Image Optimization Script for MedusaScans
+ * Image Optimization Script for GlintScans
  * 
  * This script optimizes manga images to improve loading performance.
  * It can:
@@ -181,7 +181,7 @@ async function main() {
   const outputDir = args[1] || path.join(inputDir, 'optimized');
   
   // Confirm with the user
-  console.log(`\nImage Optimization for MedusaScans`);
+  console.log(`\nImage Optimization for GlintScans`);
   console.log(`----------------------------`);
   console.log(`Input directory: ${inputDir}`);
   console.log(`Output directory: ${outputDir}`);

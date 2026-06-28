@@ -19,14 +19,14 @@ const Footer: React.FC = () => {
           <div className="max-w-lg">
             <div className="flex items-center mb-4">
               <Image
-                src="/medusa_scans_logo.png"
-                alt="Medusa Scans Logo"
+                src="/glint_logo.svg"
+                alt="Glint Scans Logo"
                 width={50}
                 height={50}
                 className="object-contain"
               />
               <h2 className="font-outfit text-3xl text-[#FF7A51] ml-3">
-                Medusa Scans
+                Glint Scans
               </h2>
             </div>
             <p className="font-karla text-gray-400 text-xs leading-relaxed">

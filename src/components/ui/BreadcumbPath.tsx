@@ -8,7 +8,7 @@ const BreadcumbPath = () => {
   return (
     <Breadcrumbs className="bg-transparent text-lg" placeholder="">
       <a href="/" className="text-white font-karla opacity-75">
-        Medusa Scans
+        Glint Scans
       </a>
       <a
         href="#"

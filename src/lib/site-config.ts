@@ -69,8 +69,8 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     kofi: "", // Default value
   },
   images: {
-    heroImage: "/Assets/medusa_stand.svg",
-    redeemImage: "/Assets/medusa2.svg",
+    heroImage: "/Assets/glow_spirit.svg",
+    redeemImage: "/Assets/glow_spirit_redeem.svg",
   },
   sectionOrder: DEFAULT_SECTION_ORDER,
   hiddenSections: DEFAULT_HIDDEN_SECTIONS,

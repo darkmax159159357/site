@@ -11,7 +11,7 @@ const SignUp = () => {
     <>
       <div className="mt-10 ">
         <h1 className="font-karla font-semibold text-white text-2xl text-center">
-          Sign up to Medusa Scans
+          Sign up to Glint Scans
         </h1>
         <center>
           <div className="">

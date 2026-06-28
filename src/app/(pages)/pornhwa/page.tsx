@@ -7,7 +7,7 @@ import PornhwaClient from "./PornhwaClient";
 export async function generateMetadata() {
   return {
     title: `Pornhwa Content | ${siteMetadata.title}`,
-    description: "Adult Korean comics on Medusa Scans",
+    description: "Adult Korean comics on Glint Scans",
     icons: [
       {
         rel: "icon",
@@ -18,7 +18,7 @@ export async function generateMetadata() {
     ],
     openGraph: {
       title: `Pornhwa Content | ${siteMetadata.title}`,
-      description: "Adult Korean comics on Medusa Scans",
+      description: "Adult Korean comics on Glint Scans",
       url: siteMetadata.siteUrl,
       siteName: siteMetadata.title,
       images: [siteMetadata.socialBanner],
@@ -28,7 +28,7 @@ export async function generateMetadata() {
     twitter: {
       card: "summary_large_image",
       title: `Pornhwa Content | ${siteMetadata.title}`,
-      description: "Adult Korean comics on Medusa Scans",
+      description: "Adult Korean comics on Glint Scans",
       images: [siteMetadata.socialBanner],
     },
   };

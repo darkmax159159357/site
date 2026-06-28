@@ -498,11 +498,11 @@ export default function AuthPage() {
             className="relative rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(139,92,246,0.4)]"
             style={{ width: "80%", maxWidth: "400px" }}
           >
-            <img 
-              src="/welcome_medusa.jpg" 
-              alt="Welcome to Medusa Scans"
+            <img
+              src="/Assets/glow_spirit.svg"
+              alt="Welcome to Glint Scans"
               style={{ width: "100%", height: "auto", display: "block" }}
-              className="object-cover"
+              className="object-cover bg-[#1a1118]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex flex-col justify-end p-6">
               <h3 className="text-2xl font-bold text-white mb-2">Let&apos;s join!</h3>

@@ -303,7 +303,7 @@ export const signInWithDiscord = async (): Promise<void> => {
   try {
     // Discord OAuth2 configuration
     const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || '1234567890'; // Add fallback for testing
-    const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://medusascans.org').replace(/\/$/, '');
+    const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://glintscans.com').replace(/\/$/, '');
     const DISCORD_REDIRECT_URI = `${SITE_URL}/api/auth/discord/callback`;
     
     console.log("Initiating Discord sign-in");

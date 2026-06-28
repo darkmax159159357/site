@@ -7,7 +7,7 @@ import R19Client from "./R19Client";
 export async function generateMetadata() {
   return {
     title: `R19 Content | ${siteMetadata.title}`,
-    description: "Adult content with age restrictions on Medusa Scans",
+    description: "Adult content with age restrictions on Glint Scans",
     icons: [
       {
         rel: "icon",
@@ -18,7 +18,7 @@ export async function generateMetadata() {
     ],
     openGraph: {
       title: `R19 Content | ${siteMetadata.title}`,
-      description: "Adult content with age restrictions on Medusa Scans",
+      description: "Adult content with age restrictions on Glint Scans",
       url: siteMetadata.siteUrl,
       siteName: siteMetadata.title,
       images: [siteMetadata.socialBanner],
@@ -28,7 +28,7 @@ export async function generateMetadata() {
     twitter: {
       card: "summary_large_image",
       title: `R19 Content | ${siteMetadata.title}`,
-      description: "Adult content with age restrictions on Medusa Scans",
+      description: "Adult content with age restrictions on Glint Scans",
       images: [siteMetadata.socialBanner],
     },
   };

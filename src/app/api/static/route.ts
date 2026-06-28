@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     // This helps prevent hotlinking and direct access
     const isValidReferer = !referer || 
                           referer.includes(host || '') || 
-                          referer.includes('medusascans.org');
+                          referer.includes('glintscans.com');
     
     if (!isValidReferer) {
       return new NextResponse('Unauthorized', { status: 403 });

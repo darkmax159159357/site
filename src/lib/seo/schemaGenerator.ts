@@ -23,7 +23,7 @@ export function generateMangaSchema(manga: {
     '@context': 'https://schema.org',
     '@type': 'Book',
     name: manga.title,
-    description: manga.description || `Read ${manga.title} online for free on Medusa Scans.`,
+    description: manga.description || `Read ${manga.title} online for free on Glint Scans.`,
     url: `${baseUrl}/manga/${manga.id}`,
     image: manga.cover || `${baseUrl}/favicon.png`,
     publisher: {
@@ -67,7 +67,7 @@ export function generateChapterSchema(chapter: {
     '@context': 'https://schema.org',
     '@type': 'Chapter',
     name: `${chapter.mangaTitle} - ${chapter.chapterTitle}`,
-    description: chapter.description || `Read ${chapter.mangaTitle} ${chapter.chapterTitle} online for free on Medusa Scans.`,
+    description: chapter.description || `Read ${chapter.mangaTitle} ${chapter.chapterTitle} online for free on Glint Scans.`,
     url: `${baseUrl}/read/${chapter.chapterId}`,
     image: chapter.cover || `${baseUrl}/favicon.png`,
     isPartOf: {

@@ -11,7 +11,7 @@ export const isProduction = (): boolean => {
 // Base URL helper — env-driven so the same build works on localhost, a staging
 // host, and production. Set NEXT_PUBLIC_SITE_URL per environment.
 export const getBaseUrl = (): string => {
-  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://medusascans.org').replace(/\/$/, '');
+  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://glintscans.com').replace(/\/$/, '');
 };
 
 // Helper to ensure HTTPS URLs

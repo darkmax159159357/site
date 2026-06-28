@@ -1091,7 +1091,7 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
     if (navigator.share) {
       navigator.share({
         title: title,
-        text: `Check out ${title} on MedusaScans!`,
+        text: `Check out ${title} on GlintScans!`,
         url: window.location.href,
       }).catch(err => {
         console.error('Error sharing:', err);
@@ -2405,7 +2405,7 @@ const NewDetails = ({ dataDetails }: NewDetailsProps) => {
       
       <div className="container mx-auto px-4 py-6">
         <div className="text-center text-white/40 text-sm">
-          © {new Date().getFullYear()} Medusa Scans. All rights reserved.
+          © {new Date().getFullYear()} Glint Scans. All rights reserved.
         </div>
       </div>
     </div>

@@ -125,7 +125,7 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
-    domains: ['localhost', '127.0.0.1', 'medusascans.com'],
+    domains: ['localhost', '127.0.0.1', 'glintscans.com'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     formats: ['image/webp', 'image/avif'],
@@ -143,10 +143,10 @@ const nextConfig = {
         has: [
           {
             type: 'host',
-            value: 'www.medusascans.org',
+            value: 'www.glintscans.com',
           },
         ],
-        destination: 'https://medusascans.org/:path*',
+        destination: 'https://glintscans.com/:path*',
         permanent: true,
       }
     ];

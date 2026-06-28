@@ -2,8 +2,8 @@
 
 export async function generateMetadata() {
   return {
-    title: "DMCA Policy | Medusa Scans",
-    description: "DMCA Policy and copyright information for Medusa Scans",
+    title: "DMCA Policy | Glint Scans",
+    description: "DMCA Policy and copyright information for Glint Scans",
     icons: [
       {
         rel: "icon",
@@ -34,14 +34,14 @@ const page = () => {
           Ability to Accept Terms of Service
         </h3>
         <p className="text-base text-gray-400 leading-relaxed">
-          By using <span className="text-gray-300">Medusa Scans</span>, you affirm that you are at least <span className="text-gray-300">13 years of age</span> and are competent to accept and comply with these Terms of Service. If you are under <span className="text-gray-300">13</span>, please refrain from using our services. This platform is <span className="text-gray-300">not intended for minors below this age</span>.
+          By using <span className="text-gray-300">Glint Scans</span>, you affirm that you are at least <span className="text-gray-300">13 years of age</span> and are competent to accept and comply with these Terms of Service. If you are under <span className="text-gray-300">13</span>, please refrain from using our services. This platform is <span className="text-gray-300">not intended for minors below this age</span>.
         </p>
         
         <h3 className="font-medium text-base sm:text-lg text-gray-300 mt-4">
           General Use of the Service
         </h3>
         <p className="text-base text-gray-400 leading-relaxed">
-          When using <span className="text-gray-300">Medusa Scans</span>, you join a global community of users. We have established the following guidelines to ensure a <span className="text-gray-300">positive and enjoyable experience</span> for all users. Please adhere to these rules, and if you see content that violates these terms, report it through the provided channels.
+          When using <span className="text-gray-300">Glint Scans</span>, you join a global community of users. We have established the following guidelines to ensure a <span className="text-gray-300">positive and enjoyable experience</span> for all users. Please adhere to these rules, and if you see content that violates these terms, report it through the provided channels.
         </p>
         
         <ul className="list-disc pl-5 sm:pl-6 mt-2 space-y-1.5">
@@ -49,7 +49,7 @@ const page = () => {
             <span className="text-gray-300">Spam & Deceptive Practices:</span> Content that misleads, scams, or spams users is strictly prohibited.
           </li>
           <li className="text-gray-400 text-base">
-            <span className="text-gray-300">Sensitive Content:</span> We aim to protect our users, especially minors. Explicit content, including <span className="text-gray-300">pornography or hentai</span>, is not allowed on Medusa Scans.
+            <span className="text-gray-300">Sensitive Content:</span> We aim to protect our users, especially minors. Explicit content, including <span className="text-gray-300">pornography or hentai</span>, is not allowed on Glint Scans.
           </li>
           <li className="text-gray-400 text-base">
             <span className="text-gray-300">Spoiler Content:</span> Content revealing major plot elements or spoilers without warnings is discouraged to maintain a positive user experience.
@@ -67,7 +67,7 @@ const page = () => {
           DMCA Takedown Request Requirements
         </h2>
         <p className="text-base text-gray-400 leading-relaxed mt-3">
-          We take the <span className="text-gray-300">intellectual property rights</span> of others seriously. If you believe that material on <span className="text-gray-300">Medusa Scans</span> infringes upon your copyright, you may file a <span className="text-gray-300">DMCA request</span> with our designated agent as described below. We will promptly review your claim and take the appropriate actions, including removing the infringing content if necessary.
+          We take the <span className="text-gray-300">intellectual property rights</span> of others seriously. If you believe that material on <span className="text-gray-300">Glint Scans</span> infringes upon your copyright, you may file a <span className="text-gray-300">DMCA request</span> with our designated agent as described below. We will promptly review your claim and take the appropriate actions, including removing the infringing content if necessary.
         </p>
         
         <h3 className="font-medium text-base sm:text-lg text-gray-300 mt-4">

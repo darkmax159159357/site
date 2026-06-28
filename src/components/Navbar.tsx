@@ -142,8 +142,8 @@ const Navbar = () => {
           {/* Logo */}
           <a className="mr-3 lg:mr-6 xl:mr-8 flex items-center justify-center shrink-0" href="/">
             <Image
-              src="/medusa_scans_logo.png"
-              alt="MedusaScans Logo"
+              src="/glint_logo.svg"
+              alt="Glint Scans Logo"
               width={64}
               height={64}
               className="rounded h-14 w-14 md:h-[60px] md:w-[60px] object-contain"

@@ -23,15 +23,15 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     // Format title properly
     const mangaTitle = chapterData?.title || id.split('-ch')[0].replace(/-/g, ' ');
     const chapterTitle = chapterData?.chapterTitle || `Chapter ${id.split('-ch')[1]}`;
-    const fullTitle = `${mangaTitle} - ${chapterTitle} | MedusaScans`;
+    const fullTitle = `${mangaTitle} - ${chapterTitle} | GlintScans`;
     
     return {
       title: fullTitle,
-      description: chapterData?.description || `Read ${mangaTitle} ${chapterTitle} online for free on MedusaScans.`,
+      description: chapterData?.description || `Read ${mangaTitle} ${chapterTitle} online for free on GlintScans.`,
       keywords: [mangaTitle, chapterTitle, "manga", "read online", "scanlation", "free manga"],
       openGraph: {
         title: fullTitle,
-        description: chapterData?.description || `Read ${mangaTitle} ${chapterTitle} online for free on MedusaScans.`,
+        description: chapterData?.description || `Read ${mangaTitle} ${chapterTitle} online for free on GlintScans.`,
         url: `${siteMetadata.siteUrl}/read/${id}`,
         siteName: siteMetadata.title,
         images: [
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       twitter: {
         card: "summary_large_image",
         title: fullTitle,
-        description: chapterData?.description || `Read ${mangaTitle} ${chapterTitle} online for free on MedusaScans.`,
+        description: chapterData?.description || `Read ${mangaTitle} ${chapterTitle} online for free on GlintScans.`,
         images: [chapterData?.cover || `${siteMetadata.siteUrl}/favicon.png`],
       },
       icons: [
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       .replace(/\b\w/g, (char: string) => char.toUpperCase());
       
     return {
-      title: `${title} | MedusaScans`,
+      title: `${title} | GlintScans`,
       description: siteMetadata.description,
       icons: [
         {

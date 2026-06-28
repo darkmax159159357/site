@@ -27,8 +27,13 @@ export const metadata: Metadata = {
     google: "GwF-YCVfOWL8weGH0D33e6ZX4vdqT96S_9BnHQ7590A",
   },
   keywords:
-    "Medusa Scans, medusascans, manga, manhwa, webtoon, adult comics, r19, pornhwa, manga online, free manga, read manga online",
+    "Glint Scans, glintscans, manga, manhwa, webtoon, adult comics, r19, pornhwa, manga online, free manga, read manga online",
   icons: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      url: "/favicon.svg",
+    },
     {
       rel: "icon",
       type: "image/png",
@@ -37,9 +42,8 @@ export const metadata: Metadata = {
     },
     {
       rel: "apple-touch-icon",
-      type: "image/png",
-      sizes: "180x180",
-      url: "/favicon.png",
+      type: "image/svg+xml",
+      url: "/favicon.svg",
     },
   ],
   alternates: {

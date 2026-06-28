@@ -7,7 +7,7 @@ import { headers } from 'next/headers';
 // Discord credentials come from environment variables (server-only secret).
 const DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || '';
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || '';
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://medusascans.org').replace(/\/$/, '');
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://glintscans.com').replace(/\/$/, '');
 
 export async function GET(request: NextRequest) {
   // Get authorization code from the URL query params

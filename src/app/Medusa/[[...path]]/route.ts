@@ -29,7 +29,7 @@ export async function GET(
     // Only allow requests from our own domain or missing referrer for legit image requests
     const isValidReferer = !referer || 
                           referer.includes(host || '') || 
-                          referer.includes('medusascans.org');
+                          referer.includes('glintscans.com');
     
     if (!isValidReferer) {
       return new NextResponse('Unauthorized', { status: 403 });

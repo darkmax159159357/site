@@ -41,7 +41,7 @@ function isValidReaderRequest(req: NextRequest): boolean {
   if (origin && (
       origin === req.nextUrl.origin || 
       origin.includes('localhost') || 
-      origin.includes('medusascans.org')
+      origin.includes('glintscans.com')
   )) {
     return true;
   }

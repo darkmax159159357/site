@@ -20,8 +20,8 @@ export async function generateMetadata({
   const formattedTag = decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
   return {
-    title: `${formattedTag} Manga & Manhwa | Medusa Scans`,
-    description: `Browse all ${formattedTag} manga and manhwa titles at Medusa Scans. Find your next favorite ${formattedTag} read!`,
+    title: `${formattedTag} Manga & Manhwa | Glint Scans`,
+    description: `Browse all ${formattedTag} manga and manhwa titles at Glint Scans. Find your next favorite ${formattedTag} read!`,
   };
 }
 

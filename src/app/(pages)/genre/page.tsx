@@ -7,7 +7,7 @@ import GenreClient from "./GenreClient";
 export async function generateMetadata() {
   return {
     title: `Browse by Genre | ${siteMetadata.title}`,
-    description: "Explore manga, manhwa, and manhua by genre on Medusa Scans",
+    description: "Explore manga, manhwa, and manhua by genre on Glint Scans",
     icons: [
       {
         rel: "icon",
@@ -18,7 +18,7 @@ export async function generateMetadata() {
     ],
     openGraph: {
       title: `Browse by Genre | ${siteMetadata.title}`,
-      description: "Explore manga, manhwa, and manhua by genre on Medusa Scans",
+      description: "Explore manga, manhwa, and manhua by genre on Glint Scans",
       url: siteMetadata.siteUrl,
       siteName: siteMetadata.title,
       images: [siteMetadata.socialBanner],
@@ -28,7 +28,7 @@ export async function generateMetadata() {
     twitter: {
       card: "summary_large_image",
       title: `Browse by Genre | ${siteMetadata.title}`,
-      description: "Explore manga, manhwa, and manhua by genre on Medusa Scans",
+      description: "Explore manga, manhwa, and manhua by genre on Glint Scans",
       images: [siteMetadata.socialBanner],
     },
   };

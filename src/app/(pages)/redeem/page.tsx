@@ -197,7 +197,7 @@ const RedeemPage: React.FC = () => {
             <div className="relative w-[450px] h-[300px]">
               <Image
                 src={redeemImage}
-                alt="Medusa"
+                alt="Glint Scans mascot"
                 fill
                 className="object-contain"
                 style={{ 
