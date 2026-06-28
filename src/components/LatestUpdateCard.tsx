@@ -26,6 +26,10 @@ type Props = {
   chapters?: Chapter[];
 };
 
+// Default coin price for premium early-access chapters (the newest two of each
+// series), mirroring mythtoons' "100c" early-access model.
+const EARLY_ACCESS_COINS = 100;
+
 // Deterministic hue (0-359) from the id, so each card keeps a stable colour.
 const hueFromId = (id: string): number => {
   let h = 0;
@@ -87,7 +91,11 @@ export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Pr
   const ChapterRow = ({ ch, showMeta }: { ch: any; showMeta: boolean }) => {
     const iso = ch.added_chap_date || ch.added_date || ch.release_date || ch.date || "";
     const isNew = ch._ts > 0 && Date.now() - ch._ts < 86400000;
-    const coin = showMeta && Number(ch.coinAmount) > 1;
+    // The newest chapters (the "recent" group, showMeta=true) are premium
+    // early-access — show a coin pill like mythtoons. Use the chapter's real
+    // price when the admin has set one, else the default early-access price.
+    const coinValue = Number(ch.coinAmount) > 1 ? Number(ch.coinAmount) : EARLY_ACCESS_COINS;
+    const coin = showMeta;
     return (
       <Link
         href={`/read/${id}-ch${ch.number}`}
@@ -104,7 +112,7 @@ export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Pr
           {coin && (
             <span className="inline-flex items-center gap-1.5 bg-amber-500/10 px-1.5 py-0.5 rounded-[6px]">
               <LockIcon className="h-3.5 w-3.5 text-amber-500" />
-              <span className="text-[10px] text-amber-500 font-semibold">{ch.coinAmount}c</span>
+              <span className="text-[10px] text-amber-500 font-semibold">{coinValue}c</span>
             </span>
           )}
           {isNew && <span className="text-[9px] font-semibold text-red-500">NEW</span>}

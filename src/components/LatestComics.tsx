@@ -401,7 +401,7 @@ const LatestComics = ({ viewAll = false, showPagination = true }) => {
           </h2>
         <Link 
           href="/latestupdated" 
-            className="text-white bg-gradient-to-r from-[#FF7F57] to-[#FF9F57] text-sm px-5 py-2 rounded-full hover:from-[#ff6a3d] hover:to-[#FF8F57] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#FF7F57]/20"
+            className="text-white bg-gradient-to-r from-[#FF7F57] to-[#FF9F57] text-sm px-5 py-2 rounded-xl hover:from-[#ff6a3d] hover:to-[#FF8F57] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#FF7F57]/20"
         >
           View All
         </Link>
