@@ -261,14 +261,15 @@ const Navbar = () => {
               </button>
             )}
 
-            {/* Notifications bell */}
-            <button
-              aria-label="Notifications"
+            {/* Notifications bell -> Announcements */}
+            <a
+              href="/announcements"
+              aria-label="Announcements"
               className="inline-flex items-center justify-center h-9 w-9 rounded-md text-white hover:bg-white/10 transition-colors"
-              title="Notifications"
+              title="Announcements"
             >
               <Bell className="w-5 h-5" strokeWidth={1.5} />
-            </button>
+            </a>
 
             {/* User */}
             {user ? (
