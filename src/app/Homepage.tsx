@@ -120,66 +120,60 @@ const Homepage = () => {
       </section>
     ),
     socials: siteSettings.homesocialbuttons ? (
-      <section className="mt-8 sm:mt-12 space-y-4 px-2 sm:px-0">
-        <div className="animate-fadeIn bg-[#0f1014] rounded-xl shadow-lg border border-gray-800/30 overflow-hidden transition-all duration-300 hover:border-[#FF7F57] hover:shadow-[0_0_15px_rgba(255,127,87,0.3)] group">
-          <div className="flex flex-row items-center justify-between p-4">
-            <div className="flex items-center">
-              <div className="w-1.5 h-16 bg-gradient-to-b from-[#FF7F57] to-[#FF5757] rounded-full mr-4 shadow-[0_0_15px_rgba(255,127,87,0.5)] transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(255,127,87,0.7)]"></div>
+      <section className="mt-8 sm:mt-12 px-2 sm:px-0">
+        {/* Single unified "Share our site" banner — mirrors mythtoons. */}
+        <div className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-[#241640] via-[#3a2272] to-[#241640] p-5 sm:p-6 shadow-lg">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-fuchsia-600/10 to-purple-600/10 pointer-events-none" />
+          <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-center sm:text-left">
+              <div className="hidden sm:flex w-11 h-11 rounded-xl bg-white/10 items-center justify-center shrink-0">
+                <FaShareAlt className="w-5 h-5 text-white" />
+              </div>
               <div>
-                <h3 className="text-white font-semibold text-lg">Share Glint Scans</h3>
-                <p className="text-gray-400 text-sm">to your friends</p>
+                <h3 className="text-white font-bold text-lg sm:text-xl">Share our site with your friends!</h3>
+                <p className="text-purple-200/80 text-sm">Join our amazing community and discover great content</p>
               </div>
             </div>
-            <div className="relative">
-              <button
-                onClick={handleShare}
-                className="hover:scale-105 active:scale-95 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg"
-              >
-                <FaShareAlt className="w-4 h-4" />
-                <span className="font-medium">Share</span>
-              </button>
-              {showShareTooltip && (
-                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md animate-fadeIn whitespace-nowrap">
-                  Link copied to clipboard!
-                </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="relative">
+                <button
+                  onClick={handleShare}
+                  className="hover:scale-105 active:scale-95 px-5 py-2.5 bg-white text-[#241640] font-medium rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow"
+                >
+                  <FaShareAlt className="w-4 h-4" />
+                  <span>Share</span>
+                </button>
+                {showShareTooltip && (
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md animate-fadeIn whitespace-nowrap">
+                    Link copied to clipboard!
+                  </div>
+                )}
+              </div>
+              {siteConfig.social.discord && (
+                <a
+                  href={siteConfig.social.discord}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:scale-105 active:scale-95 px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-medium rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow"
+                >
+                  <FaDiscord className="w-4 h-4" />
+                  <span>Join Discord</span>
+                </a>
+              )}
+              {siteConfig.social.kofi && (
+                <a
+                  href={siteConfig.social.kofi}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:flex hover:scale-105 active:scale-95 px-5 py-2.5 bg-[#FF5E5B] hover:bg-[#FF7C79] text-white font-medium rounded-xl items-center justify-center gap-2 transition-all duration-300 shadow"
+                >
+                  <SiKofi className="w-4 h-4" />
+                  <span>Ko-fi</span>
+                </a>
               )}
             </div>
           </div>
         </div>
-        {siteConfig.social.discord && (
-          <div className="animate-fadeInDelayed bg-[#0f1014] rounded-xl shadow-lg border border-gray-800/30 overflow-hidden transition-all duration-300 hover:border-[#5865F2] hover:shadow-[0_0_15px_rgba(88,101,242,0.3)] group">
-            <div className="flex flex-row items-center justify-between p-4">
-              <div className="flex items-center">
-                <div className="w-1.5 h-16 bg-gradient-to-b from-[#5865F2] to-[#4752C4] rounded-full mr-4 shadow-[0_0_15px_rgba(88,101,242,0.5)] transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(88,101,242,0.7)]"></div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg">Join Our Socials</h3>
-                  <p className="text-gray-400 text-sm">be part of our community</p>
-                </div>
-              </div>
-              <a href={siteConfig.social.discord} target="_blank" rel="noopener noreferrer" className="hover:scale-105 active:scale-95 px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg">
-                <FaDiscord className="w-4 h-4" />
-                <span className="font-medium">Discord</span>
-              </a>
-            </div>
-          </div>
-        )}
-        {siteConfig.social.kofi && (
-          <div className="animate-fadeInDelayed bg-[#0f1014] rounded-xl shadow-lg border border-gray-800/30 overflow-hidden transition-all duration-300 hover:border-[#FF5E5B] hover:shadow-[0_0_15px_rgba(255,94,91,0.3)] group">
-            <div className="flex flex-row items-center justify-between p-4">
-              <div className="flex items-center">
-                <div className="w-1.5 h-16 bg-gradient-to-b from-[#FF5E5B] to-[#FF7C79] rounded-full mr-4 shadow-[0_0_15px_rgba(255,94,91,0.5)] transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(255,94,91,0.7)]"></div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg">Support Us</h3>
-                  <p className="text-gray-400 text-sm">help us keep the site running</p>
-                </div>
-              </div>
-              <a href={siteConfig.social.kofi} target="_blank" rel="noopener noreferrer" className="hover:scale-105 active:scale-95 px-6 py-2.5 bg-[#FF5E5B] hover:bg-[#FF7C79] text-white rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg">
-                <SiKofi className="w-4 h-4" />
-                <span className="font-medium">Ko-fi</span>
-              </a>
-            </div>
-          </div>
-        )}
       </section>
     ) : null,
     pinned: (
