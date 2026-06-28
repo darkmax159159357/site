@@ -117,7 +117,7 @@ const TrendingSection = () => {
               type: "loop",
               fixedWidth: "18rem",
               perMove: 1,
-              gap: "0.5rem",
+              gap: "0.25rem",
               focus: "center",
               trimSpace: false,
               autoplay: true,
