@@ -93,8 +93,9 @@ const TrendingSection = () => {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className="mb-4">
+    <section className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+      {/* Header stays centered/constrained; the carousel below is full-bleed (matches mythtoons) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
         <h2 className="text-xl font-bold mb-2">Most Popular</h2>
         {/* Blue glowing divider right after the heading (matches mythtoons) */}
         <div className="relative mb-4">
@@ -114,9 +115,9 @@ const TrendingSection = () => {
           <Splide
             options={{
               type: "loop",
-              perPage: 5,
+              fixedWidth: "18rem",
               perMove: 1,
-              gap: "0.25rem",
+              gap: "0.5rem",
               focus: "center",
               trimSpace: false,
               autoplay: true,
@@ -130,9 +131,9 @@ const TrendingSection = () => {
               speed: 600,
               easing: "cubic-bezier(0.25, 1, 0.5, 1)",
               breakpoints: {
-                1200: { perPage: 4, gap: "0.5rem" },
-                768: { perPage: 3, gap: "0.25rem" },
-                480: { perPage: 2, gap: "0.25rem" },
+                1024: { fixedWidth: "14rem" },
+                768: { fixedWidth: "12rem" },
+                480: { fixedWidth: "9.5rem", gap: "0.25rem" },
               },
             }}
             aria-roledescription="carousel"
@@ -206,7 +207,7 @@ const TrendingSection = () => {
           `}</style>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
