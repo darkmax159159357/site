@@ -128,8 +128,8 @@ export default function PinnedCollection() {
             speed: 800,
             easing: "cubic-bezier(0.25, 1, 0.5, 1)",
             breakpoints: {
-              1920: { perPage: 6, gap: "1rem" },
-              1440: { perPage: 5, gap: "0.875rem" },
+              // Keep 5-per-row (width calc(20% - 0.7rem)) on all wide screens,
+              // exactly like mythtoons — no 6-per-row override at 1920+.
               1200: { perPage: 4, gap: "0.875rem" },
               1024: { perPage: 3, gap: "0.75rem" },
               768: { perPage: 3, gap: "0.75rem" },
