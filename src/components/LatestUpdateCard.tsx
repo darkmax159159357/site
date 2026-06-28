@@ -95,7 +95,7 @@ export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Pr
         style={{ ["--hover-color" as any]: accent }}
       >
         <div className="flex items-center gap-1.5 min-w-0">
-          <span className="font-medium text-gray-400 group-hover/chapter:text-white transition-colors">Ch. {ch.number}</span>
+          <span className="font-medium text-gray-400 group-hover/chapter:text-white transition-colors whitespace-nowrap">Ch. {ch.number}</span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="text-gray-500 text-[10px]">
