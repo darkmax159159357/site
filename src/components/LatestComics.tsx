@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import MangaCard from "./MangaCard";
+import LatestUpdateCard from "./LatestUpdateCard";
 import LoadingIndicator from "./LoadingIndicator";
 import { fetchLastUpdated } from "@/action/fetchKomik";
 import Link from "next/link";
@@ -455,32 +456,13 @@ const LatestComics = ({ viewAll = false, showPagination = true }) => {
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-3 sm:gap-4"
             >
-          {mangaList.map((manga, index) => (
-            <MangaCard
+          {mangaList.map((manga) => (
+            <LatestUpdateCard
               key={manga.id}
               id={manga.id}
               title={manga.title}
               cover={manga.cover}
-              rating={manga.rating || 4.5}
-              status={manga.status || "ONGOING"}
-              chapter={manga.chapter || "Chapter 1"}
-              country={manga.country || "jp"}
-              slug={manga.slug || manga.id}
-              chapters={manga.chapters || [
-                { 
-                  number: manga.id === "the-perfect-male-lead" ? 25 : (manga.id === "the-demon-lord" ? 6 : 1), 
-                  date: manga.chapters?.[0]?.added_chap_date || manga.chapters?.[0]?.added_date || manga.chapters?.[0]?.release_date || new Date(Date.now() - 86400000 * 2).toISOString(),
-                  formattedDate: "2 days ago"
-                },
-                { 
-                  number: manga.id === "the-perfect-male-lead" ? 24 : (manga.id === "the-demon-lord" ? 5 : 2), 
-                  date: manga.chapters?.[1]?.added_chap_date || manga.chapters?.[1]?.added_date || manga.chapters?.[1]?.release_date || new Date(Date.now() - 86400000 * 4).toISOString(),
-                  formattedDate: "4 days ago"
-                }
-              ]}
-              genres={manga.genres || ["ACTION", "FANTASY"]}
-                  has_chapters={true}
-                  isFeature={index === 0} 
+              chapters={manga.chapters || []}
             />
           ))}
             </motion.div>
