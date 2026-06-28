@@ -12,7 +12,6 @@ import Trending2 from "@/components/Trending2";
 import CompletedCollection from "@/components/CompletedCollection";
 import PinnedCollection from "@/components/PinnedCollection";
 import SeriesShowcase from "@/components/SeriesShowcase";
-import BlogPosts from "@/components/BlogPosts";
 import BlogPosts2 from "@/components/BlogPosts2";
 import { FaDiscord, FaShareAlt } from "react-icons/fa";
 import { SiKofi } from "react-icons/si"; 
@@ -113,10 +112,12 @@ const Homepage = () => {
         <BeforeContent1 />
       </section>
     ),
+    // mythtoons' homepage position #2 is the Announcements list (no "Unlock
+    // Premium" promo banner). BlogPosts2 owns the whole #blog-posts-2 section
+    // (megaphone header + count + "View all" → /announcements + post cards).
     premium: (
-      <section id="blog-posts" className="mt-8 sm:mt-12">
-        <BlogPosts />
-        <div className="mt-4"><BlogPosts2 /></div>
+      <section className="mt-6 sm:mt-8">
+        <BlogPosts2 />
       </section>
     ),
     socials: siteSettings.homesocialbuttons ? (

@@ -5,7 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 export type SectionId =
   | "series"       // SeriesShowcase -> top carousel of large vertical poster cards
   | "hero"
-  | "premium"      // BlogPosts "Unlock Premium"
+  | "premium"      // Announcements list (mythtoons #blog-posts-2) — 📢 posts from Firestore
   | "socials"
   | "pinned"       // PinnedCollection -> "Editor's Choice" (featured completed series)
   | "popular"      // TrendingSection -> "Most Popular" (Splide center-focus carousel)
@@ -54,12 +54,12 @@ export const DEFAULT_NAV_TABS: NavTab[] = [
   { id: "coinshop", name: "Coin Shop", path: "/coins", icon: "coins", highlight: true },
 ];
 
-// Default order mirrors mythtoons' current homepage: series carousel up top, then
-// Most Popular, the Share/socials banner, Pinned Collection, and Latest Updates.
-// The extra sections mythtoons no longer shows (premium, completed, toprated) are
-// kept below and remain toggleable from the dashboard.
+// Default order mirrors mythtoons' homepage exactly, section by section:
+// series carousel → Announcements (premium) → Most Popular (popular) → Share
+// banner (socials) → Pinned Collection → Latest Updates → Complete Collection →
+// Top Rated. The classic banner hero stays last and hidden by default.
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
-  "series", "popular", "socials", "pinned", "latest", "hero", "premium", "completed", "toprated",
+  "series", "premium", "popular", "socials", "pinned", "latest", "completed", "toprated", "hero",
 ];
 
 // By default the classic banner hero is hidden, because the series carousel now
