@@ -174,20 +174,16 @@ const Homepage = () => {
                         </div>
                       )}
                     </div>
-                    {siteConfig.social.discord && (
-                      <>
-                        <div className="hidden sm:block h-10 w-px bg-white/30" />
-                        <a href={siteConfig.social.discord} target="_blank" rel="noopener noreferrer">
-                          <button
-                            type="button"
-                            className="group relative overflow-hidden inline-flex items-center gap-2 sm:gap-2.5 rounded-lg bg-[#5865F2] px-4 sm:px-5 py-2 sm:py-3 text-sm sm:text-base font-bold text-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-[#4752C4]"
-                          >
-                            <FaDiscord className="h-4 w-4 sm:h-5 sm:w-5 relative z-10" />
-                            <span className="relative z-10">Join Discord</span>
-                          </button>
-                        </a>
-                      </>
-                    )}
+                    <div className="hidden sm:block h-10 w-px bg-white/30" />
+                    <a href={siteConfig.social.discord || "https://discord.gg/2Ssehz7GNa"} target="_blank" rel="noopener noreferrer">
+                      <button
+                        type="button"
+                        className="group relative overflow-hidden inline-flex items-center gap-2 sm:gap-2.5 rounded-lg bg-[#5865F2] px-4 sm:px-5 py-2 sm:py-3 text-sm sm:text-base font-bold text-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-[#4752C4]"
+                      >
+                        <FaDiscord className="h-4 w-4 sm:h-5 sm:w-5 relative z-10" />
+                        <span className="relative z-10">Join Discord</span>
+                      </button>
+                    </a>
                   </div>
                 </div>
               </div>
