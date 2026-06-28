@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { fetchLastUpdated } from "@/action/fetchKomik";
 
 // "Complete Collection" — mirrors mythtoons.org's #completed-toons: a header
 // (emerald check icon + title + "View All →") above a horizontal, drag-to-scroll
@@ -114,9 +113,19 @@ export function CompletedPosterCard({ item, index }: { item: Item; index: number
 
 // Fetch completed series (status COMPLETED) enriched with a Firestore view-count
 // map. Shared by the homepage row and the /completed grid.
+// NOTE: we read the raw catalog (/Medusa/manga/manga.json) directly rather than
+// fetchLastUpdated(), because that helper strips the `status` (and `rating`)
+// fields, which would make the COMPLETED filter match nothing.
 export async function loadCompleted(limit?: number): Promise<Item[]> {
   const [data, viewsMap] = await Promise.all([
-    fetchLastUpdated().catch(() => []),
+    (async () => {
+      try {
+        const res = await fetch("/Medusa/manga/manga.json");
+        return res.ok ? await res.json() : [];
+      } catch {
+        return [];
+      }
+    })(),
     (async () => {
       const map = new Map<string, number>();
       try {
