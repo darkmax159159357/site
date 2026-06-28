@@ -174,30 +174,32 @@ const TrendingSection = () => {
             ))}
           </Splide>
 
-          {/* Center-focus styling: only the active slide is full-color + caption visible */}
+          {/* Center-focus styling (matches mythtoons): the middle three slides
+              (prev, active, next) are full-colour with captions; only the two
+              partially-visible edge slides are dimmed/desaturated. */}
           <style jsx global>{`
             .trending-splide .splide__slide {
               transition: all 0.25s linear;
             }
             .trending-splide .splide__slide .embla__slide {
-              opacity: 0.3;
+              opacity: 0.35;
               filter: saturate(0);
+              transition: all 0.25s linear;
             }
-            .trending-splide .splide__slide.is-active .embla__slide {
-              opacity: 1;
-              filter: saturate(1);
-            }
+            .trending-splide .splide__slide.is-active .embla__slide,
             .trending-splide .splide__slide.is-prev .embla__slide,
             .trending-splide .splide__slide.is-next .embla__slide {
-              opacity: 0.62;
-              filter: saturate(0);
+              opacity: 1;
+              filter: saturate(1);
             }
             .trending-splide .slide-caption {
               opacity: 0;
               visibility: hidden;
               transition: opacity 0.25s linear;
             }
-            .trending-splide .splide__slide.is-active .slide-caption {
+            .trending-splide .splide__slide.is-active .slide-caption,
+            .trending-splide .splide__slide.is-prev .slide-caption,
+            .trending-splide .splide__slide.is-next .slide-caption {
               opacity: 1;
               visibility: visible;
             }
