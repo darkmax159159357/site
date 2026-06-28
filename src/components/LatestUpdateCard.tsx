@@ -56,17 +56,17 @@ const parseTs = (s?: string): number => {
   return isNaN(p.getTime()) ? 0 : p.getTime();
 };
 
+// Compact relative time: m=minute, h=hour, d=day, w=week, mo=month, y=year.
 const timeAgo = (ts: number): string => {
   if (!ts) return "";
   const diff = Math.floor((Date.now() - ts) / 1000);
-  if (diff < 60) return "just now";
-  if (diff < 3600) { const m = Math.floor(diff / 60); return `${m} minute${m > 1 ? "s" : ""} ago`; }
-  if (diff < 86400) { const h = Math.floor(diff / 3600); return `${h} hour${h > 1 ? "s" : ""} ago`; }
-  if (diff < 604800) { const d = Math.floor(diff / 86400); return `${d} day${d > 1 ? "s" : ""} ago`; }
-  if (diff < 2592000) { const w = Math.floor(diff / 604800); return `${w} week${w > 1 ? "s" : ""} ago`; }
-  if (diff < 31536000) { const mo = Math.floor(diff / 2592000); return `${mo} month${mo > 1 ? "s" : ""} ago`; }
-  const dt = new Date(ts);
-  return dt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  if (diff < 60) return "now";
+  if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
+  if (diff < 604800) return `${Math.floor(diff / 86400)}d`;
+  if (diff < 2592000) return `${Math.floor(diff / 604800)}w`;
+  if (diff < 31536000) return `${Math.floor(diff / 2592000)}mo`;
+  return `${Math.floor(diff / 31536000)}y`;
 };
 
 const LockIcon = ({ className = "" }: { className?: string }) => (
@@ -104,6 +104,9 @@ export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Pr
       >
         <div className="flex items-center gap-1.5 min-w-0">
           <span className="font-medium text-gray-400 group-hover/chapter:text-white transition-colors whitespace-nowrap">Ch. {ch.number}</span>
+          {isNew && (
+            <span className="text-[8px] font-bold text-sky-300 bg-sky-500/20 px-1 py-px rounded-[4px] leading-none tracking-wide">NEW</span>
+          )}
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="text-gray-500 text-[10px]">
@@ -115,7 +118,6 @@ export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Pr
               <span className="text-[10px] text-amber-500 font-semibold">{coinValue}c</span>
             </span>
           )}
-          {isNew && <span className="text-[9px] font-semibold text-red-500">NEW</span>}
         </div>
       </Link>
     );
