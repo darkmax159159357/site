@@ -2,7 +2,7 @@
 
 import BreadcumbPath from "@/components/ui/BreadcumbPath";
 import { fetchLastUpdated } from "@/action/fetchKomik";
-import MangaCard from "@/components/MangaCard";
+import LatestUpdateCard from "@/components/LatestUpdateCard";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Content2 } from '@/components/ads/AdPositions';
@@ -121,7 +121,7 @@ const Page = () => {
     return getCurrentPage(paginationKey);
   });
   
-  const itemsPerPage = 9;
+  const itemsPerPage = 21;
 
   // Update context when page changes
   useEffect(() => {
@@ -344,21 +344,13 @@ const Page = () => {
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-3 sm:gap-4 mt-5"
             >
-              {mangaList.map((manga, index) => (
-                <MangaCard
+              {mangaList.map((manga) => (
+                <LatestUpdateCard
                   key={manga.id}
                   id={manga.id}
                   title={manga.title}
                   cover={manga.cover}
-                  rating={manga.rating ? parseFloat(manga.rating) : 4.5}
-                  status={manga.status || "ONGOING"}
-                  chapter={manga.chapter || "Chapter 1"}
-                  country={manga.country || "jp"}
-                  slug={manga.slug || manga.manga_slug || manga.id}
                   chapters={manga.chapters || []}
-                  genres={manga.genres || ["ACTION", "FANTASY"]}
-                  has_chapters={true}
-                  isFeature={index === 0} // Highlight the first/latest manga
                 />
               ))}
             </motion.div>

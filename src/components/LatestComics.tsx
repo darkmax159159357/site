@@ -157,7 +157,7 @@ const LatestComics = ({ viewAll = false, showPagination = true }) => {
   // Track if this is a user-initiated page change
   const [isUserNavigation, setIsUserNavigation] = useState(false);
   
-  const itemsPerPage = viewAll ? 18 : 9; // Show 9 items on homepage, 18 in view all mode
+  const itemsPerPage = viewAll ? 18 : 21; // Homepage shows 21 (7 rows x 3) like mythtoons; 18 per page in view-all mode
 
   // Update stored pagination state when currentPage changes, but only if not initialized from URL
   useEffect(() => {

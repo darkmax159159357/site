@@ -205,7 +205,7 @@ const Homepage = () => {
     latest: (
       <section id="latest-comics" className="mt-8 sm:mt-12">
         <Suspense fallback={<LatestComicsLoader />}>
-          <MemoizedLatestComics showPagination={true} />
+          <MemoizedLatestComics showPagination={false} />
         </Suspense>
       </section>
     ),
