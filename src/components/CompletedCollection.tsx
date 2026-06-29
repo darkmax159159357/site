@@ -20,7 +20,9 @@ type Item = {
   views: number;
 };
 
-// mythtoons' warm card-tint palette, cycled by index.
+// mythtoons' warm card-tint palette. The colour is tied to the series id (hash),
+// not its position, so a given manga always keeps the same tint — matching how
+// mythtoons assigns it — even when the list reorders.
 const PALETTE: [number, number, number][] = [
   [191, 106, 64],
   [144, 32, 32],
@@ -29,6 +31,12 @@ const PALETTE: [number, number, number][] = [
   [128, 48, 48],
   [191, 64, 64],
 ];
+
+const tintFromId = (id: string): [number, number, number] => {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+};
 
 // Compact view count (e.g. 6432 -> "6.4K").
 const fmtViews = (n: number): string => {
@@ -51,8 +59,8 @@ const EyeIcon = ({ className = "" }: { className?: string }) => (
 );
 
 // One completed poster card (reused by the homepage row and the /completed grid).
-export function CompletedPosterCard({ item, index }: { item: Item; index: number }) {
-  const [r, g, b] = PALETTE[index % PALETTE.length];
+export function CompletedPosterCard({ item }: { item: Item }) {
+  const [r, g, b] = tintFromId(item.id);
   return (
     <Link draggable={false} className="block select-none" href={`/manga/${item.id}`}>
       <div className="group relative w-[140px] space-y-2 shrink-0">
@@ -225,7 +233,7 @@ export default function CompletedCollection() {
             >
               <div className="flex gap-4 pb-4" style={{ width: "max-content" }}>
                 {list.map((item, i) => (
-                  <CompletedPosterCard key={`${item.id}-${i}`} item={item} index={i} />
+                  <CompletedPosterCard key={`${item.id}-${i}`} item={item} />
                 ))}
               </div>
             </div>

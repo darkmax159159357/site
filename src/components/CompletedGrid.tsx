@@ -46,7 +46,7 @@ export default function CompletedGrid() {
       ) : (
         <div className="grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-4 justify-items-center">
           {list.map((item, i) => (
-            <CompletedPosterCard key={`${item.id}-${i}`} item={item} index={i} />
+            <CompletedPosterCard key={`${item.id}-${i}`} item={item} />
           ))}
         </div>
       )}
