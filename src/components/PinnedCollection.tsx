@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Pin } from "lucide-react";
-import { fetchLastUpdated } from "@/action/fetchKomik";
 import "@splidejs/react-splide/css";
 import "@/styles/pintoons.css";
 
@@ -23,6 +22,17 @@ type Item = {
   description: string;
   chaptersCount: string;
   rating: number | null;
+  status: string;
+};
+
+// Normalize catalog status to mythtoons' wording (CSS capitalizes it):
+// RELEASING/ONGOING -> "ongoing", COMPLETED -> "completed", HIATUS -> "hiatus".
+const statusLabel = (s?: string): string => {
+  const t = (s || "").toString().toUpperCase();
+  if (t.includes("COMPLETE")) return "completed";
+  if (t.includes("HIATUS")) return "hiatus";
+  if (t.includes("RELEAS") || t.includes("ONGOING")) return "ongoing";
+  return s ? s.toLowerCase() : "ongoing";
 };
 
 // Six neon themes cycled per card (same palette/order as mythtoons).
@@ -43,7 +53,10 @@ export default function PinnedCollection() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchLastUpdated();
+        // Read the raw catalog directly: fetchLastUpdated() strips the `status`
+        // and `rating` fields the card needs (status badge + ⭐ value).
+        const res = await fetch("/Medusa/manga/manga.json");
+        const data = res.ok ? await res.json() : [];
         const mapped: Item[] = (data || []).slice(0, 14).map((m: any) => ({
           id: m.id,
           slug: m.id,
@@ -56,7 +69,9 @@ export default function PinnedCollection() {
             : [],
           description: m.description || "",
           chaptersCount: Array.isArray(m.chapters) ? String(m.chapters.length) : "0",
-          rating: typeof m.rating === "number" ? m.rating : null,
+          rating:
+            m.rating != null && !isNaN(Number(m.rating)) ? Number(m.rating) : null,
+          status: statusLabel(m.status),
         }));
         setItems(mapped);
       } catch (e) {
@@ -200,6 +215,9 @@ export default function PinnedCollection() {
                         <div className="neon-stat">
                           <span className="neon-stat-label">Ch.</span>
                           <span className="neon-stat-value">{item.chaptersCount || "0"}+</span>
+                        </div>
+                        <div className="neon-stat">
+                          <span className="neon-status">{item.status}</span>
                         </div>
                       </div>
                     </div>
