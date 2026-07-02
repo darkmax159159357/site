@@ -11,6 +11,7 @@ import ResponsiveLayout from "@/components/ResponsiveLayout";
 import Trending2 from "@/components/Trending2";
 import CompletedCollection from "@/components/CompletedCollection";
 import PinnedCollection from "@/components/PinnedCollection";
+import Footer from "@/components/Footer";
 import SeriesShowcase from "@/components/SeriesShowcase";
 import BlogPosts2 from "@/components/BlogPosts2";
 import { FaDiscord, FaShareAlt } from "react-icons/fa";
@@ -239,6 +240,10 @@ const Homepage = () => {
             <React.Fragment key={sid}>{sectionMap[sid] ?? null}</React.Fragment>
           ))}
       </ResponsiveLayout>
+
+      {/* Footer — the homepage lives at the app root (not under (pages)/), so it
+          needs its own Footer; (pages)/layout.tsx only wraps the other routes. */}
+      <Footer />
     </>
   );
 };

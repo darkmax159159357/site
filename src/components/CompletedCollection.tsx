@@ -237,14 +237,23 @@ export default function CompletedCollection() {
                 ))}
               </div>
             </div>
-            {/* Edge fade gradients (match mythtoons; #141517 page bg) */}
+            {/* Edge fades — soft black (blends over the purple homepage bg, not a
+                hard grey box) and masked to taper off toward the bottom. */}
             <div
-              className="absolute left-0 top-0 bottom-0 w-20 sm:w-28 lg:w-40 pointer-events-none z-10"
-              style={{ background: "linear-gradient(to right, rgb(20,21,23) 0%, rgb(20,21,23) 15%, rgba(20,21,23,0.9) 40%, rgba(20,21,23,0.5) 70%, transparent 100%)" }}
+              className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 lg:w-32 pointer-events-none z-10"
+              style={{
+                background: "linear-gradient(to right, rgba(10,11,15,0.9) 0%, rgba(10,11,15,0.45) 45%, transparent 100%)",
+                maskImage: "linear-gradient(to bottom, #000 20%, transparent 95%)",
+                WebkitMaskImage: "linear-gradient(to bottom, #000 20%, transparent 95%)",
+              }}
             />
             <div
-              className="absolute right-0 top-0 bottom-0 w-20 sm:w-28 lg:w-40 pointer-events-none z-10"
-              style={{ background: "linear-gradient(to left, rgb(20,21,23) 0%, rgb(20,21,23) 15%, rgba(20,21,23,0.9) 40%, rgba(20,21,23,0.5) 70%, transparent 100%)" }}
+              className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 lg:w-32 pointer-events-none z-10"
+              style={{
+                background: "linear-gradient(to left, rgba(10,11,15,0.9) 0%, rgba(10,11,15,0.45) 45%, transparent 100%)",
+                maskImage: "linear-gradient(to bottom, #000 20%, transparent 95%)",
+                WebkitMaskImage: "linear-gradient(to bottom, #000 20%, transparent 95%)",
+              }}
             />
           </div>
         )}
