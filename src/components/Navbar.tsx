@@ -1,7 +1,7 @@
 "use client";
 import DialogAlert from "./ui/DialogAlert";
 import useModal from "@/hooks/useModal";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { userMenuLinks } from "./utils/NavLink";
 import NavLink from "./navlink/NavLink";
 import { IoMenu } from "react-icons/io5";
@@ -45,19 +45,20 @@ const Navbar = () => {
   const { handleOpen, open, setOpen } = useModal();
   const [openMenu, setOpenMenu] = useState(false);
   const path = usePathname();
+  const router = useRouter();
   const { user, userData, logout } = useAuth();
   const [isMounted, setIsMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Content-mode segmented toggle (Home / New / Complete) — mirrors mythtoons.
-  // Visual for now; wiring it to actually filter the homepage is a follow-up.
+  // Content-mode segmented toggle (Home / New / Complete). Each segment navigates
+  // to its page; the active segment tracks the current route.
   const contentModes = [
-    { id: "home", label: "Home", Icon: HomeIcon },
-    { id: "new", label: "New", Icon: LayoutGrid },
-    { id: "complete", label: "Complete", Icon: CheckCircle2 },
+    { id: "home", label: "Home", Icon: HomeIcon, href: "/" },
+    { id: "new", label: "New", Icon: LayoutGrid, href: "/new" },
+    { id: "complete", label: "Complete", Icon: CheckCircle2, href: "/completed" },
   ] as const;
-  const [contentMode, setContentMode] = useState<"home" | "new" | "complete">("home");
-  const activeModeIndex = contentModes.findIndex((m) => m.id === contentMode);
+  const currentMode = path === "/new" ? "new" : path === "/completed" ? "complete" : "home";
+  const activeModeIndex = contentModes.findIndex((m) => m.id === currentMode);
 
   // Navbar tabs come from the dashboard (Firestore site_config). Until loaded we
   // render the mythtoons defaults so there's never an empty navbar.
@@ -212,11 +213,11 @@ const Navbar = () => {
                   <div className="absolute inset-0 rounded-full animate-pulse opacity-30" style={{ boxShadow: "rgba(245,158,11,0.376) 0px 0px 12px" }} />
                 </div>
                 {contentModes.map((m) => {
-                  const isActive = contentMode === m.id;
+                  const isActive = currentMode === m.id;
                   return (
                     <button
                       key={m.id}
-                      onClick={() => setContentMode(m.id)}
+                      onClick={() => router.push(m.href)}
                       title={`Show ${m.label.toLowerCase()}`}
                       className={`relative z-10 flex-1 flex items-center justify-center gap-1.5 rounded-full transition-all duration-300 py-1.5 px-4 text-xs min-w-[68px] ${
                         isActive ? "text-white font-semibold" : "text-zinc-400 hover:text-zinc-200"

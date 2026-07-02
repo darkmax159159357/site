@@ -24,6 +24,9 @@ type Props = {
   title: string;
   cover: string;
   chapters?: Chapter[];
+  // When the series is completed, a green "COMPLETED" corner ribbon is shown on
+  // the cover (matches mythtoons' /completed and /new cards).
+  status?: string;
 };
 
 // Default coin price for premium early-access chapters (the newest two of each
@@ -75,7 +78,8 @@ const LockIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Props) {
+export default function LatestUpdateCard({ id, title, cover, chapters = [], status }: Props) {
+  const isCompleted = (status || "").toString().toUpperCase().includes("COMPLETE");
   const hue = hueFromId(id);
   const accent = `hsl(${hue} 35% 55%)`;
   const mix = (pct: number) => `color-mix(in oklab, ${accent} ${pct}%, transparent)`;
@@ -153,6 +157,19 @@ export default function LatestUpdateCard({ id, title, cover, chapters = [] }: Pr
               className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               style={{ boxShadow: `${mix(55)} 0px 0px 0px 2px inset` }}
             />
+            {/* Diagonal "COMPLETED" corner ribbon (mythtoons-style) */}
+            {isCompleted && (
+              <div className="absolute top-0 left-0 z-10 w-24 h-24 overflow-hidden pointer-events-none">
+                <div
+                  className="absolute w-[110px] -rotate-45 text-center text-white"
+                  style={{ top: "12px", left: "-32px", background: "linear-gradient(to right, #22c55e, #10b981)" }}
+                >
+                  <span className="block font-bold py-[2px]" style={{ fontSize: "8px", letterSpacing: "0.3px", textShadow: "0 1px 1px rgba(0,0,0,0.9)" }}>
+                    COMPLETED
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </Link>
 
