@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
             onClick={() => setIsModalOpen(true)}
             className="inline-block bg-[#FF7F57] hover:bg-[#ff6a3d] text-white text-sm font-medium rounded-full px-5 py-1.5 transition-colors"
           >
-            Made by Dante
+            Made by Arco
           </button>
         </div>
 
