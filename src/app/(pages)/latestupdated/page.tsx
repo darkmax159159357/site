@@ -299,7 +299,10 @@ const Page = () => {
 
   return (
     <div className="w-[90%] m-auto mb-32" id="latest-updates-section">
-      <BreadcumbPath />
+      {/* Centered breadcrumb, matching mythtoons' /latestupdated header */}
+      <div className="flex justify-center">
+        <BreadcumbPath />
+      </div>
       <div className="mt-5">
         <h1 className="text-white text-2xl sm:text-3xl text-center flex items-center justify-center gap-2">
           Latest Updated
