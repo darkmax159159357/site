@@ -58,26 +58,31 @@ const Eye = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-// Per-rank badge + faint card tint (gold / silver / bronze for 1-3; neutral 4+).
+// Medal styling for ranks 1-3 (gold / silver / bronze). Neutral `zinc` for silver
+// so #2 reads as metallic silver, not blue. Each badge gets a pulsing coloured
+// glow + a periodic white shine sweep (see the .medal-shine keyframes below).
+const MEDAL: Record<1 | 2 | 3, { grad: string; ring: string; shadow: string; glow: string; icon: string }> = {
+  1: { grad: "from-amber-500/25 to-yellow-500/25", ring: "ring-amber-400/50", shadow: "shadow-amber-500/30", glow: "rgba(251,191,36,0.5)", icon: "text-amber-300" },
+  2: { grad: "from-zinc-200/40 to-zinc-400/50", ring: "ring-zinc-100/70", shadow: "shadow-zinc-300/40", glow: "rgba(228,228,231,0.55)", icon: "text-zinc-100" },
+  3: { grad: "from-orange-600/25 to-amber-700/25", ring: "ring-orange-500/50", shadow: "shadow-orange-500/30", glow: "rgba(251,146,60,0.5)", icon: "text-orange-300" },
+};
+
 const RankBadge = ({ rank }: { rank: number }) => {
-  if (rank === 1)
+  if (rank >= 1 && rank <= 3) {
+    const m = MEDAL[rank as 1 | 2 | 3];
+    const Icon = rank === 1 ? Crown : Medal;
     return (
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-yellow-500/20 ring-1 ring-amber-500/40 shadow-lg shadow-amber-500/20">
-        <Crown className="h-5 w-5 text-amber-400" />
+      <div className="relative">
+        {/* pulsing coloured glow behind the medal */}
+        <div className="absolute inset-0 rounded-xl blur-md animate-pulse" style={{ background: m.glow }} />
+        <div className={`relative w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-gradient-to-br ${m.grad} ring-1 ${m.ring} shadow-lg ${m.shadow}`}>
+          <Icon className={`h-5 w-5 ${m.icon} drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]`} />
+          {/* metallic shine sweep */}
+          <span className="medal-shine" />
+        </div>
       </div>
     );
-  if (rank === 2)
-    return (
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-zinc-200/40 to-zinc-500/40 ring-1 ring-zinc-200/60 shadow-lg shadow-zinc-400/30">
-        <Medal className="h-5 w-5 text-zinc-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
-      </div>
-    );
-  if (rank === 3)
-    return (
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-orange-600/20 to-amber-700/20 ring-1 ring-orange-600/40 shadow-lg shadow-orange-500/20">
-        <Medal className="h-5 w-5 text-orange-400" />
-      </div>
-    );
+  }
   return (
     <div
       className="w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold"
@@ -90,7 +95,7 @@ const RankBadge = ({ rank }: { rank: number }) => {
 
 const TOP_GRAD: Record<number, string> = {
   1: "from-amber-500/20 to-yellow-500/20",
-  2: "from-slate-300/20 to-slate-400/20",
+  2: "from-zinc-300/20 to-zinc-400/20",
   3: "from-orange-600/20 to-amber-700/20",
 };
 
@@ -233,6 +238,22 @@ const Trending2 = () => {
           ))}
         </div>
       )}
+
+      {/* Metallic shine sweep for the rank medals (gold/silver/bronze). */}
+      <style jsx global>{`
+        .medal-shine {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.5) 50%, transparent 65%);
+          transform: translateX(-130%);
+          animation: medalShine 3.8s ease-in-out infinite;
+          pointer-events: none;
+        }
+        @keyframes medalShine {
+          0%, 55% { transform: translateX(-130%); }
+          82%, 100% { transform: translateX(130%); }
+        }
+      `}</style>
     </div>
   );
 };
