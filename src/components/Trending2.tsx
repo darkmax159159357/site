@@ -68,8 +68,8 @@ const RankBadge = ({ rank }: { rank: number }) => {
     );
   if (rank === 2)
     return (
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-slate-100/30 to-slate-400/40 ring-1 ring-slate-200/50 shadow-lg shadow-slate-300/30">
-        <Medal className="h-5 w-5 text-slate-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-zinc-200/40 to-zinc-500/40 ring-1 ring-zinc-200/60 shadow-lg shadow-zinc-400/30">
+        <Medal className="h-5 w-5 text-zinc-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
       </div>
     );
   if (rank === 3)
